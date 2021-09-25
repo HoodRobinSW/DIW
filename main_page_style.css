@@ -1,0 +1,50 @@
+body {
+  font-family: Ubuntu;
+}
+
+nav {
+  border: 1px solid black;
+  overflow: hidden;
+}
+
+div.log_in-register {
+  display: flex;
+  /*border: 1px solid blue;*/
+  width: 15%;
+  float: right;
+  padding: 8px 0px;
+}
+
+div.log_in-register ul {
+  /*border: 1px solid green;*/
+  padding: 0px;
+  display: flex;
+  margin: 0 auto;
+}
+
+div.log_in-register ul li{
+  list-style: none;
+  /*border: 1px solid black;*/
+  /*border-radius: 10px;*/
+  display: flex;
+  float: right;
+  /*padding: 8px;*/
+}
+
+div.log_in-register ul li a {
+  text-decoration: none;
+  color: black;
+  /*border: 1px solid yellow;*/
+  border-radius: 10px;
+  padding: 8px;
+  width: 100%;
+}
+
+div.log_in-register ul li a:hover {
+  color: white;
+  background-color: black;
+}
+
+li#detach {
+  margin-right: 15px;
+}
