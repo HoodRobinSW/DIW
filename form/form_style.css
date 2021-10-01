@@ -1,0 +1,83 @@
+html, body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: Ubuntu;
+  background-color: #0F0326;
+}
+
+div.title {
+  width: 30%;
+  margin: 50px auto;
+  text-align: center;
+  border-radius: 5px;
+  background-color: #E65F5C;
+  padding: 1px;
+}
+
+form {
+  width: 38%;
+  margin: 0 auto;
+}
+
+fieldset {
+  padding: 20px;
+  border: 3px solid white;
+  border-radius: 10px;
+  background-color: #FFFF82;
+}
+
+#grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 0.18fr;
+  margin-bottom: 20px;
+  /*border: 1px solid black;*/
+}
+
+input[type=submit] {
+  background-color: #B5D99C;
+  border-radius: 5px;
+  width: 80px;
+  display: flex;
+  margin: 0 auto;
+  margin-top: 50px;
+}
+
+input[type=submit]:hover {
+  background-color: #A7D289;
+}
+
+#pass_strength_ok, #pass_stregth_cross, #ok, #cross {
+  display: none;
+}
+
+#ok img, #cross img, #pass_strength_ok img, #pass_stregth_cross img {
+  display: grid;
+  max-width:20px;
+  height: 100%;
+  margin: auto auto;
+}
+
+footer {
+  position: absolute;
+  width: 100%;
+  bottom: 0;
+}
+
+#passError {
+  color: red;
+  grid-column-start: 2;
+}
+
+div.pass_error {
+  background-color: red;
+  position: relative;
+  margin: 0 auto;
+  padding: 2em;
+  width: 50%;
+  text-align: center;
+  bottom: 0;
+  display: none;
+}

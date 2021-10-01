@@ -9,7 +9,7 @@
   </head>
   <body>
     <?php
-      $email = ""; $pass1 = ""; $pass2 = ""; $birthDate = "";
+      $email = ""; $pass1 = ""; $pass2 = ""; $birthDate = ""; $passErr = "";
       if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $email = inputCleaner($_POST["email"]);
         $pass1 = inputCleaner($_POST["pass"]);
@@ -18,20 +18,25 @@
 
         if ($pass1 == $pass2) {
           $conn = new mysqli("localhost", "alejdnxu", "hFWucoCz1K26", "alejdnxu_portfolio");
+          
           if ($conn->connect_error) {
             die("Connection failed: ".$conn->connect_error);
-          }
-
-          $passErr = "";
-
-          $sql = "INSERT INTO usuarios(Usuario_email, Usuario_clave)
-            VALUES ('$email', '$pass')";
-          if ($conn->query($sql) == TRUE) {
-            echo "Registered successfully";
           } else {
-            echo "Error: ".$sql."<br/>".$conn->error;
+              $sql = "SELECT Usuario_email FROM usuarios WHERE Usuario_email = '$email'";
+              $results = $conn->query($sql);
+              if (($results->num_rows) > 0) {
+                $email_error = "There is already an account with this email";
+              } else {
+                $sql = "INSERT INTO usuarios(Usuario_email, Usuario_clave)
+                VALUES ('$email', '$pass1')";
+                if ($conn->query($sql)) {
+                  echo "Registered successfully";
+                } else {
+                  echo "Error: ".$sql."<br/>".$conn->error;  
+                }   
+            }
+            $conn->close();   
           }
-          $conn->close();
 
         } else {
           $passErr = "Error, passwords do not match!";
@@ -72,7 +77,7 @@
                 <img src="cross-icon.png" alt="insecure">
               </div>
             </div>
-            <div class="grid" id="passError">
+            <div class="grid" id="pass_error">
               <?php echo $passErr;?>
             </div>
             <div id="grid" class="pass2">
@@ -99,6 +104,9 @@
     <footer>
       <div id="error" class="pass_error">
         The value of the password input was not strong enough.
+      </div id="error" class="email_error">
+      <div>
+          <?php echo $email_error?>
       </div>
     </footer>
   </body>
