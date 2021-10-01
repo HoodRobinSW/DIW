@@ -125,3 +125,5 @@ Stack trace:
 [30-Sep-2021 16:00:30 UTC] PHP Warning:  Attempt to read property "num_rows" on bool in /home/alejdnxu/public_html/form/index.php on line 27
 [01-Oct-2021 06:35:32 UTC] PHP Warning:  Undefined variable $email_error in /home/alejdnxu/public_html/form/index.php on line 109
 [01-Oct-2021 06:35:55 UTC] PHP Warning:  Undefined variable $email_error in /home/alejdnxu/public_html/form/index.php on line 109
+[01-Oct-2021 07:41:34 UTC] PHP Warning:  Undefined variable $email_error in /home/alejdnxu/public_html/form/index.php on line 109
+[01-Oct-2021 07:56:34 UTC] PHP Warning:  Undefined variable $email_error in /home/alejdnxu/public_html/form/index.php on line 109
