@@ -34,6 +34,9 @@ const whenType = () => {
         lower = true;
       } else if (pass[x] >= 'A' && pass[x] <= 'Z') {
         upper = true;
+      } else if (!isNaN(pass[x])) {
+        number = true;
+      }
     }
     if (lower && upper && number) {
       passCross.style.display = "none";
