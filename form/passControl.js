@@ -34,7 +34,11 @@ const whenType = () => {
         lower = true;
       } else if (pass[x] >= 'A' && pass[x] <= 'Z') {
         upper = true;
+<<<<<<< HEAD
       } else if (!isNaN(pass[x])) {
+=======
+      } else if (!isNaN(pass[x])){
+>>>>>>> form
         number = true;
       }
     }
