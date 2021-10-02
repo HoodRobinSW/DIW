@@ -21,6 +21,7 @@ const whenType = () => {
   const passCross = document.getElementById("pass_stregth_cross");
   let upper = false;
   let lower = false;
+  let number = false;
   document.getElementById("confirm_pass").value = "";
   okCheck.style.display = "none";
   cross.style.display = "none";
@@ -33,9 +34,11 @@ const whenType = () => {
         lower = true;
       } else if (pass[x] >= 'A' && pass[x] <= 'Z') {
         upper = true;
+      } else if (!isNaN(pass[x])){
+        number = true;
       }
     }
-    if (lower && upper) {
+    if (lower && upper && number) {
       passCross.style.display = "none";
       passCheck.style.display = "block";
     } else {

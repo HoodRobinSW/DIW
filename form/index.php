@@ -18,7 +18,7 @@
 
         if ($pass1 == $pass2) {
           $conn = new mysqli("localhost", "alejdnxu", "hFWucoCz1K26", "alejdnxu_portfolio");
-          
+
           if ($conn->connect_error) {
             die("Connection failed: ".$conn->connect_error);
           } else {
@@ -27,15 +27,18 @@
               if (($results->num_rows) > 0) {
                 $email_error = "There is already an account with this email";
               } else {
+                $hash_pass = password_hash($pass1, PASSWORD_DEFAULT);
                 $sql = "INSERT INTO usuarios(Usuario_email, Usuario_clave)
-                VALUES ('$email', '$pass1')";
+                VALUES ('$email', '$hash_pass')";
                 if ($conn->query($sql)) {
                   echo "Registered successfully";
+                  include 'welcome_email.php';
+                  mail($email, $subject, $message_es, $header);
                 } else {
-                  echo "Error: ".$sql."<br/>".$conn->error;  
-                }   
+                  echo "Error: ".$sql."<br/>".$conn->error;
+                }
             }
-            $conn->close();   
+            $conn->close();
           }
 
         } else {
@@ -102,7 +105,7 @@
       </div>
     </main>
     <footer>
-      <div id="error" class="pass_error">
+      <div id="error" class="pass_error" color="red">
         The value of the password input was not strong enough.
       </div id="error" class="email_error">
       <div>
