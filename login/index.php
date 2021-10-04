@@ -22,11 +22,10 @@
         if ($conn->connect_error) {
           die("Connection failed: ".$conn->connect_error);
         } else {
-          $sql = "SELECT Usuario_email FROM usuarios WHERE Usuario_email = '$email'";
-          $results = $conn->query($sql)->num_rows;
-          if (($results) == 1) {
-            $sql = "SELECT Usuario_clave FROM usuarios WHERE Usuario_email = '$email'";
-            $db_pass = $conn->query($sql)->fetch_row()[0];
+          $sql = "SELECT Usuario_email, Usuario_clave FROM usuarios WHERE Usuario_email = '$email'";
+          $results = $conn->query($sql);
+          if ($results->num_rows == 1) {
+            $db_pass = $results->fetch_row()[1];
             if (password_verify($pass, $db_pass)) {
               $_SESSION['login_signup_display_style'] = "none";
               $_SESSION['display_user'] = "Welcome, ".$email;
@@ -35,7 +34,7 @@
               echo "Error, verifique su email o contraseña";
             }
           } else {
-            echo "Error, verifique su email o contraseña";
+            echo "Error, verifique su email";
           }
         }
       }
