@@ -33,7 +33,7 @@
                 if ($conn->query($sql)) {
                   echo "Registered successfully";
                   include 'welcome_email.php';
-                  mail($email, $subject, $message_eng, $header);
+                  mail($email, $subject, $message_es);
                 } else {
                   echo "Error: ".$sql."<br/>".$conn->error;
                 }
