@@ -20,38 +20,37 @@
         $data = htmlspecialchars($data);
         return $data;
       }
-      $email = ""; $pass1 = ""; $pass2 = ""; $birthDate = ""; $passErr = "";
+      $email = ""; $pass1 = ""; $pass2 = ""; $date = ""; $passErr = ""; $email_error = "";
       if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $email = inputCleaner($_POST["email"]);
         $pass1 = inputCleaner($_POST["pass"]);
         $pass2 = inputCleaner($_POST["confirm_pass"]);
-        $birthDate = inputCleaner($_POST["birthDate"]);
+        $date = inputCleaner($_POST["date"]);
 
         if ($pass1 == $pass2) {
           $conn = new mysqli("localhost", "alejdnxu", "hFWucoCz1K26", "alejdnxu_portfolio");
           if ($conn->connect_error) {
             die("Connection failed: ".$conn->connect_error);
           } else {
-              $sql = "SELECT Usuario_email FROM usuarios WHERE Usuario_email = '$email'";
+              $sql = "SELECT Usuario_id, Usuario_email FROM usuarios WHERE Usuario_email = '$email'";
               $results = $conn->query($sql);
               if (($results->num_rows) > 0) {
                 $email_error = "There is already an account with this email";
               } else {
                 $hash_pass = password_hash($pass1, PASSWORD_DEFAULT);
-                $sql = "INSERT INTO usuarios(Usuario_email, Usuario_clave)
-                VALUES ('$email', '$hash_pass')";
+                $user_id = $results->fetch_row()[0];
+                $verification_token = bin2hex(openssl_random_pseudo_bytes(16));
+                $sql = "INSERT INTO usuarios(Usuario_email, Usuario_clave, Usuario_token_aleatorio)
+                VALUES ('$email', '$hash_pass', '$verification_token')";
                 if ($conn->query($sql)) {
                   echo "Registered successfully";
                   include 'welcome_email.php';
                   /*--Generating a verification token--*/
-                  $sql = "SELECT Usuario_id FROM usuarios WHERE Usuario_email = '$email'";
-                  $results = $conn->query($sql);
-                  $user_id = $results->fetch_row()[0];
-                  $verification_token = bin2hex(openssl_random_pseudo_bytes(16));
-                  $verification_url = "https://www.alejandroortegaguerra.me/verify.php?t=$verification_token=$user_id";
+                  $verification_url = "https://www.alejandroortegaguerra.me/verify.php?t=$verification_token&user=$user_id";
                   $link = "<a href='".$verification_url."'>".$verification_url."</a>";
                   $message_eng .= $link;
                   mail($email, $subject, $message_eng);
+                  /*INTRODUCING THE TOKEN WITHIN THE DATABASE*/
                 } else {
                   echo "Error: ".$sql."<br/>".$conn->error;
                 }
@@ -100,7 +99,7 @@
      </header>
     <main>
       <div class="form">
-        <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']);?>" method="post" oninput='up2.setCustomValidity(up2.value != up.value ? "Passwords do not match." : "")'>
+        <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']);?>" method="post" oninput='pass2.setCustomValidity(pass2.value != pass.value ? "Passwords do not match." : "")'>
           <div class="form-group row">
             <!--<label for="inputEmail3" class="col-sm-2 col-form-label">Email: </label>-->
             <div class="col-sm-10">
@@ -110,14 +109,14 @@
           <div class="form-group row">
             <!--<label for="inputPassword3" class="col-sm-2 col-form-label">Password: </label>-->
             <div class="col-sm-10">
-              <input type="password" class="form-control" id="inputPassword3" placeholder="Password" name="pass"
+              <input type="password" class="form-control" id="inputPassword3" placeholder="Password" name="pass1"
               pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" required>
             </div>
           </div>
           <div class="form-group row">
             <!--<label for="inputPassword3" class="col-sm-2 col-form-label"></label>-->
             <div class="col-sm-10">
-              <input type="password" class="form-control" id="inputPassword3" name="confirm_pass" placeholder="Re-type Password" required>
+              <input type="password" class="form-control" id="inputPassword3" name="pass2" placeholder="Re-type Password" required>
             </div>
           </div>
           <div class="form-group row">

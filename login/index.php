@@ -21,7 +21,7 @@
 
       $_SESSION['login_signup_display_style'] = "";
       $_SESSION['display_user_style'] = "";
-      $email = $_POST['email']; $pass = $_POST['pass'];
+      $email = ""; $pass = "";
       if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $email = inputCleaner($_POST['email']);
         $pass = inputCleaner($_POST['pass']);
@@ -29,18 +29,29 @@
         if ($conn->connect_error) {
           die("Connection failed: ".$conn->connect_error);
         } else {
-          $sql = "SELECT Usuario_email, Usuario_clave FROM usuarios WHERE Usuario_email = '$email'";
+          $sql = "SELECT Usuario_clave, Usuario_bloqueado FROM usuarios WHERE Usuario_email = '$email'";
           $results = $conn->query($sql);
           if ($results->num_rows == 1) {
-            $db_pass = $results->fetch_row()[1];
-            if (password_verify($pass, $db_pass)) {
-              $_SESSION['login_signup_display_style'] = 'display: none;';
-              $_SESSION['display_user'] = 'Welcome, '.$email;
-              $_SESSION['session_email'] = $email;
-              $_SESSION['display_user_style'] = 'display: block;';
-              header('Location: ../');
+
+            $db_pass; $bloq;
+            while ($row = $results->fetch_row()) {
+              $db_pass = $row[1];
+              $bloq = $row[2];
+            }
+            $results->free_result();
+
+            if ($bloq == 0) {
+              if (password_verify($pass, $db_pass)) {
+                $_SESSION['login_signup_display_style'] = 'display: none;';
+                $_SESSION['display_user'] = 'Welcome, '.$email;
+                $_SESSION['session_email'] = $email;
+                $_SESSION['display_user_style'] = 'display: block;';
+                header('Location: ../');
+              } else {
+                echo "Error, verifique su email o contraseña";
+              }
             } else {
-              echo "Error, verifique su email o contraseña";
+              echo "Please verify your user before logging in";
             }
           } else {
             echo "Error, verifique su email";
