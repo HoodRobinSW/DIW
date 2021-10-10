@@ -1,14 +1,25 @@
+<?php
+  session_start();
+  if (isset($_SESSION['session_email']))
+    header('Location: ../');
+ ?>
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
   <head>
     <meta charset="utf-8">
-    <link href="https://fonts.googleapis.com/css2?family=Ubuntu&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="form_style.css">
+    <link href="../bootstrap-5.1.2-dist/css/bootstrap.min.css" rel="stylesheet"/>
+    <script src="../bootstrap-5.1.2-dist/js/bootstrap.bundle.min.js"></script>
     <script type="text/javascript" src="passControl.js"></script>
     <title>Registro</title>
   </head>
   <body>
     <?php
+      function inputCleaner($data) {
+        $data = trim($data);
+        $data = stripslashes($data);
+        $data = htmlspecialchars($data);
+        return $data;
+      }
       $email = ""; $pass1 = ""; $pass2 = ""; $birthDate = ""; $passErr = "";
       if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $email = inputCleaner($_POST["email"]);
@@ -18,7 +29,6 @@
 
         if ($pass1 == $pass2) {
           $conn = new mysqli("localhost", "alejdnxu", "hFWucoCz1K26", "alejdnxu_portfolio");
-
           if ($conn->connect_error) {
             die("Connection failed: ".$conn->connect_error);
           } else {
@@ -33,7 +43,15 @@
                 if ($conn->query($sql)) {
                   echo "Registered successfully";
                   include 'welcome_email.php';
-                  mail($email, $subject, $message_es);
+                  /*--Generating a verification token--*/
+                  $sql = "SELECT Usuario_id FROM usuarios WHERE Usuario_email = '$email'";
+                  $results = $conn->query($sql);
+                  $user_id = $results->fetch_row()[0];
+                  $verification_token = bin2hex(openssl_random_pseudo_bytes(16));
+                  $verification_url = "https://www.alejandroortegaguerra.me/verify.php?t=$verification_token=$user_id";
+                  $link = "<a href='".$verification_url."'>".$verification_url."</a>";
+                  $message_eng .= $link;
+                  mail($email, $subject, $message_eng);
                 } else {
                   echo "Error: ".$sql."<br/>".$conn->error;
                 }
@@ -45,67 +63,116 @@
           $passErr = "Error, passwords do not match!";
         }
       }
-
-      function inputCleaner($data) {
-        $data = trim($data);
-        $data = stripslashes($data);
-        $data = htmlspecialchars($data);
-        return $data;
-      }
      ?>
-    <header>
-      <nav>
-
-      </nav>
-      <div class="title">
-        <h1>Sign Up Form</h1>
-      </div>
-    </header>
+     <header class="p-3 mb-3 border-bottom">
+       <nav id="navbar_bg" class="navbar navbar-expand-md navbar-dark fixed-top ">
+         <div class="container-fluid">
+           <div id="navbar_" class="collapse navbar-collapse" id="navbarCollapse">
+             <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+               <li><a id="list_item_" href="../" class="nav-link px-2 link-dark">Home</a></li>
+               <!--<li><a href="#" class="nav-link px-2 link-dark">Inventory</a></li>
+               <li><a href="#" class="nav-link px-2 link-dark">Customers</a></li>
+               <li><a href="#" class="nav-link px-2 link-dark">Products</a></li>-->
+             </ul>
+             <!--THIS TOGGLES WHEN THE USER LOGINS; DISPLAY NONE;-->
+             <div style="display:block;">
+               <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+                 <li><a id="list_item_" class="nav-link px-2 link-dark" href="../login/">Login</a></li>
+                 <li><a id="list_item_" class="nav-link px-2 link-dark" href="#">Sign up</a></li>
+               </ul>
+             </div>
+             <!--THIS TOGGLES WHEN THE USER LOGINS-->
+             <div class="dropdown text-end" style="display:none;">
+               <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
+                 <img src="https://github.com/mdo.png" alt="mdo" class="rounded-circle" width="32" height="32">
+               </a>
+               <ul class="dropdown-menu text-small" aria-labelledby="dropdownUser1">
+                 <li><a class="dropdown-item" href="#">Settings</a></li>
+                 <li><a class="dropdown-item" href="#">Profile</a></li>
+                 <li><hr class="dropdown-divider"></li>
+                 <li><a class="dropdown-item" href="#">Sign out</a></li>
+               </ul>
+             </div>
+             <!--UNTIL HERE-->
+           </div>
+         </div>
+       </nav>
+     </header>
     <main>
       <div class="form">
-        <form id="form" class="" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']);?>" method="post">
-          <fieldset>
-            <!--<legend>Sign up: </legend>-->
-            <div id="grid" class="email">
-              <label for="email"><abbr title="*">*</abbr> Email: </label>
-              <input id="email" type="email" name="email" value="<?php echo $email; ?>" required>
+        <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']);?>" method="post" oninput='up2.setCustomValidity(up2.value != up.value ? "Passwords do not match." : "")'>
+          <div class="form-group row">
+            <!--<label for="inputEmail3" class="col-sm-2 col-form-label">Email: </label>-->
+            <div class="col-sm-10">
+              <input type="email" class="form-control" id="inputEmail3" placeholder="Email" name="email" value="<?php echo $email; ?>" required>
             </div>
-            <div id="grid" class="pass1">
-              <label for="pass"><abbr title="*">*</abbr> Password: </label>
-              <input id="pass" type="password" name="pass" value="" onkeyup="whenType()" required pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}">
-              <div id="pass_strength_ok">
-                <img src="ok-icon.png" alt="OK">
+          </div>
+          <div class="form-group row">
+            <!--<label for="inputPassword3" class="col-sm-2 col-form-label">Password: </label>-->
+            <div class="col-sm-10">
+              <input type="password" class="form-control" id="inputPassword3" placeholder="Password" name="pass"
+              pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" required>
+            </div>
+          </div>
+          <div class="form-group row">
+            <!--<label for="inputPassword3" class="col-sm-2 col-form-label"></label>-->
+            <div class="col-sm-10">
+              <input type="password" class="form-control" id="inputPassword3" name="confirm_pass" placeholder="Re-type Password" required>
+            </div>
+          </div>
+          <div class="form-group row">
+            <!--<label for="inputDate" class="col-sm-2 col-form-label"></label>-->
+            <div class="col-sm-10">
+              <input type="date" class="form-control" id="inputDate" name="date" value="<?php echo $birthDate; ?>" required>
+            </div>
+          </div>
+          <!--
+          <fieldset class="form-group">
+            <div class="row">
+              <legend class="col-form-label col-sm-2 pt-0">Radios</legend>
+              <div class="col-sm-10">
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios1" value="option1" checked>
+                  <label class="form-check-label" for="gridRadios1">
+                    First radio
+                  </label>
+                </div>
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios2" value="option2">
+                  <label class="form-check-label" for="gridRadios2">
+                    Second radio
+                  </label>
+                </div>
+                <div class="form-check disabled">
+                  <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios3" value="option3" disabled>
+                  <label class="form-check-label" for="gridRadios3">
+                    Third disabled radio
+                  </label>
+                </div>
               </div>
-              <div id="pass_stregth_cross">
-                <img src="cross-icon.png" alt="insecure">
-              </div>
-            </div>
-            <div class="grid" id="pass_error" color="red">
-              <?php echo $passErr;?>
-            </div>
-            <div id="grid" class="pass2">
-              <label for="confirm_pass"><abbr title="*">*</abbr> Password confirm: </label>
-              <input id="confirm_pass" type="password" name="confirm_pass" value="" onkeyup="whenTypeConfirm()" required pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}">
-              <div id="ok">
-                <img src="ok-icon.png" alt="OK">
-              </div>
-              <div id="cross">
-                <img src="cross-icon.png" alt="insecure">
-              </div>
-            </div>
-            <div id="grid" class="birthDate">
-              <label for="birthDate"><abbr title="*">*</abbr> BirthDate: </label>
-              <input type="date" name="birthDate" value="<?php echo $birthDate; ?>" required>
-            </div>
-            <div class="save">
-              <input type="submit" name="save" value="save" onsubmit="passInput()">
             </div>
           </fieldset>
+          <div class="form-group row">
+            <div class="col-sm-2">Checkbox</div>
+            <div class="col-sm-10">
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="gridCheck1">
+                <label class="form-check-label" for="gridCheck1">
+                  Example checkbox
+                </label>
+              </div>
+            </div>
+          </div>-->
+          <div class="form-group row">
+            <div class="col-sm-10">
+              <button type="submit" class="btn btn-primary">Sign up</button>
+            </div>
+          </div>
         </form>
       </div>
     </main>
     <footer>
-      <div id="error" class="pass_error">
+      <div id="error" class="pass_error" style="display:none;">
         The value of the password input was not strong enough.
       </div id="error" class="email_error">
       <div>
