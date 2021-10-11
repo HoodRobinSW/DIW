@@ -21,7 +21,7 @@
               <li><a href="#" class="nav-link px-2 link-dark">Products</a></li>-->
             </ul>
             <!--THIS TOGGLES WHEN THE USER LOGINS; DISPLAY NONE;-->
-            <div id="login_signup_" style="<?php echo $_SESSION['login_signup_display_style']; ?>">
+            <div id="login_signup_" style='<?php echo $_SESSION['login_signup_display_style']; ?>'>
               <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
                 <li><a id="list_item_" class="nav-link px-2 link-dark" href="login/">Login</a></li>
                 <li><a id="list_item_" class="nav-link px-2 link-dark" href="form/">Sign up</a></li>

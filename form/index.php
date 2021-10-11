@@ -23,8 +23,8 @@
       $email = ""; $pass1 = ""; $pass2 = ""; $date = ""; $passErr = ""; $email_error = "";
       if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $email = inputCleaner($_POST["email"]);
-        $pass1 = inputCleaner($_POST["pass"]);
-        $pass2 = inputCleaner($_POST["confirm_pass"]);
+        $pass1 = inputCleaner($_POST["pass1"]);
+        $pass2 = inputCleaner($_POST["pass2"]);
         $date = inputCleaner($_POST["date"]);
 
         if ($pass1 == $pass2) {
@@ -32,40 +32,44 @@
           if ($conn->connect_error) {
             die("Connection failed: ".$conn->connect_error);
           } else {
-              $sql = "SELECT Usuario_id, Usuario_email FROM usuarios WHERE Usuario_email = '$email'";
+              $sql = "SELECT Usuario_email FROM usuarios WHERE Usuario_email = '$email'";
               $results = $conn->query($sql);
               if (($results->num_rows) > 0) {
                 $email_error = "There is already an account with this email";
               } else {
                 $hash_pass = password_hash($pass1, PASSWORD_DEFAULT);
-                $user_id = $results->fetch_row()[0];
-                $verification_token = bin2hex(openssl_random_pseudo_bytes(16));
-                $sql = "INSERT INTO usuarios(Usuario_email, Usuario_clave, Usuario_token_aleatorio)
-                VALUES ('$email', '$hash_pass', '$verification_token')";
+                $sql = "INSERT INTO usuarios(Usuario_email, Usuario_clave)
+                VALUES ('$email', '$hash_pass')";
                 if ($conn->query($sql)) {
-                  echo "Registered successfully";
+                  $sql = "SELECT Usuario_id FROM usuarios WHERE Usuario_email = '$email'";
+                  $results = $conn->query($sql);
+                  $user_id = $results->fetch_row()[0];
+                  $verification_token = bin2hex(openssl_random_pseudo_bytes(16));
+                  $sql = "UPDATE usuarios SET Usuario_token_aleatorio = '$verification_token' WHERE Usuario_email = '$email';
+                  $conn->query($sql);
+                  echo 'Registered successfully';
                   include 'welcome_email.php';
                   /*--Generating a verification token--*/
-                  $verification_url = "https://www.alejandroortegaguerra.me/verify.php?t=$verification_token&user=$user_id";
-                  $link = "<a href='".$verification_url."'>".$verification_url."</a>";
+                  $verification_url = 'https://www.alejandroortegaguerra.me/verify.php?t=$verification_token&user=$user_id';
+                  $link = '<a href=\''.$verification_url.'\'>'.$verification_url.'</a>';
                   $message_eng .= $link;
                   mail($email, $subject, $message_eng);
                   /*INTRODUCING THE TOKEN WITHIN THE DATABASE*/
                 } else {
-                  echo "Error: ".$sql."<br/>".$conn->error;
+                  echo 'Error: '.$sql.'<br/>'.$conn->error;
                 }
             }
             $conn->close();
           }
 
         } else {
-          $passErr = "Error, passwords do not match!";
+          $passErr = 'Error, passwords do not match!';
         }
       }
      ?>
-     <header class="p-3 mb-3 border-bottom">
-       <nav id="navbar_bg" class="navbar navbar-expand-md navbar-dark fixed-top ">
-         <div class="container-fluid">
+     <header class='p-3 mb-3 border-bottom'>
+       <nav id='navbar_bg' class='navbar navbar-expand-md navbar-dark fixed-top '>
+         <div class='container-fluid'>
            <div id="navbar_" class="collapse navbar-collapse" id="navbarCollapse">
              <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
                <li><a id="list_item_" href="../" class="nav-link px-2 link-dark">Home</a></li>
