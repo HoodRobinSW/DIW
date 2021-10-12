@@ -50,7 +50,7 @@
                   echo 'Registered successfully';
                   include 'welcome_email.php';
                   /*--Generating a verification token--*/
-                  $verification_url = 'https://www.alejandroortegaguerra.me/verify.php?t=$verification_token&user=$user_id';
+                  $verification_url = "https://www.alejandroortegaguerra.me/login/verify.php?t=$verification_token&user=$user_id";
                   $link = "<a href='".$verification_url."'>".$verification_url."</a>";
                   $message_eng .= $link;
                   mail($email, $subject, $message_eng);

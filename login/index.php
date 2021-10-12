@@ -35,8 +35,8 @@
 
             $db_pass; $bloq;
             while ($row = $results->fetch_row()) {
-              $db_pass = $row[1];
-              $bloq = $row[2];
+              $db_pass = $row[0];
+              $bloq = $row[1];
             }
             $results->free_result();
 
