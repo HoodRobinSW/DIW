@@ -45,13 +45,13 @@
                   $results = $conn->query($sql);
                   $user_id = $results->fetch_row()[0];
                   $verification_token = bin2hex(openssl_random_pseudo_bytes(16));
-                  $sql = "UPDATE usuarios SET Usuario_token_aleatorio = '$verification_token' WHERE Usuario_email = '$email';
+                  $sql = "UPDATE usuarios SET Usuario_token_aleatorio = '$verification_token' WHERE Usuario_email = '$email'";
                   $conn->query($sql);
                   echo 'Registered successfully';
                   include 'welcome_email.php';
                   /*--Generating a verification token--*/
                   $verification_url = 'https://www.alejandroortegaguerra.me/verify.php?t=$verification_token&user=$user_id';
-                  $link = '<a href=\''.$verification_url.'\'>'.$verification_url.'</a>';
+                  $link = "<a href='".$verification_url."'>".$verification_url."</a>";
                   $message_eng .= $link;
                   mail($email, $subject, $message_eng);
                   /*INTRODUCING THE TOKEN WITHIN THE DATABASE*/
@@ -67,9 +67,9 @@
         }
       }
      ?>
-     <header class='p-3 mb-3 border-bottom'>
-       <nav id='navbar_bg' class='navbar navbar-expand-md navbar-dark fixed-top '>
-         <div class='container-fluid'>
+     <header class="p-3 mb-3 border-bottom">
+       <nav id="navbar_bg" class="navbar navbar-expand-md navbar-dark fixed-top ">
+         <div class="container-fluid">
            <div id="navbar_" class="collapse navbar-collapse" id="navbarCollapse">
              <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
                <li><a id="list_item_" href="../" class="nav-link px-2 link-dark">Home</a></li>
