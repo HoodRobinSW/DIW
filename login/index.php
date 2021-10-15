@@ -21,7 +21,7 @@
 
       $_SESSION['login_signup_display_style'] = "";
       $_SESSION['display_user_style'] = "";
-      $email = ""; $pass = "";
+      $email = ""; $pass = ""; $verificationError = "";
       if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $email = inputCleaner($_POST['email']);
         $pass = inputCleaner($_POST['pass']);
@@ -51,7 +51,7 @@
                 echo "Error, verifique su email o contraseña";
               }
             } else {
-              echo "Please verify your user before logging in";
+              $verificationError = "visibility: visible";
             }
           } else {
             echo "Error, verifique su email";
@@ -114,6 +114,22 @@
           <button class="w-100 btn btn-lg btn-primary" type="submit">Sign in</button>
         </form>
       </div>
+      <!--Modals-->
+      <div class="modal modal-alert position-fixed d-block bg-secondary py-5" tabindex="-1" role="dialog" id="modalChoice" style="<?php echo $verificationError;?>">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content rounded-4 shadow">
+            <div class="modal-body p-4 text-center">
+              <h5 class="mb-0">Email verification required</h5>
+              <p class="mb-0">We've already sent you a verification email, please check your inbox</p>
+            </div>
+            <div class="modal-footer flex-nowrap p-0">
+              <button type="button" class="btn btn-lg btn-link fs-6 text-decoration-none col-6 m-0 rounded-0 border-right"><strong>Resend</strong></button>
+              <button type="button" class="btn btn-lg btn-link fs-6 text-decoration-none col-6 m-0 rounded-0" data-bs-dismiss="modal" onclick="document.getElementById('modalChoice').style.visibility = 'hidden'">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!---->
     </main>
   </body>
 </html>
