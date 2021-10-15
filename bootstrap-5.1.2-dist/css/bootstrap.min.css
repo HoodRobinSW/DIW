@@ -5180,7 +5180,7 @@ fieldset:disabled .btn {
     overflow-x: hidden;
     overflow-y: auto;
     outline: 0;
-    visibility: visible;
+    visibility: hidden;
 }
 .modal-dialog {
     position: relative;
