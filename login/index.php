@@ -21,7 +21,7 @@
 
       $_SESSION['login_signup_display_style'] = "";
       $_SESSION['display_user_style'] = "";
-      $email = ""; $pass = ""; $verificationError = "";
+      $email = ""; $pass = ""; $verificationError = "";$errorSignIp_style = "";$errorSignIn = "";
       if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $email = inputCleaner($_POST['email']);
         $pass = inputCleaner($_POST['pass']);
@@ -48,16 +48,19 @@
                 $_SESSION['display_user_style'] = 'display: block;';
                 header('Location: ../');
               } else {
-                echo "Error, verifique su email o contraseña";
+                $errorSignIn = "Error, verifique su email o contraseña";
               }
             } else {
               $verificationError = "visibility: visible";
             }
           } else {
-            echo "Error, verifique su email";
+            $errorSignIn = "Error, verifique su email o contraseña";
           }
         }
       }
+
+      if (!empty($errorSignIn))
+        $errorSignIp_style = 'display: block; opacity: 1;';
      ?>
      <header class="p-3 mb-3 border-bottom">
        <nav id="navbar_bg" class="navbar navbar-expand-md navbar-dark fixed-top ">
@@ -94,9 +97,12 @@
        </nav>
    </header>
     <main class="form-signin">
-      <div id="login_form" class="text-center">
+      <h2 class="signupFormHeader">Log in</h2>
+      <div class="signupError" style="<?php echo $errorSignIp_style ?>">
+        <?php echo $errorSignIn  ?>
+      </div>
+      <div class="text-center signupFormHeader">
         <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']);?>" method="post">
-          <h1 class="h3 mb-3 fw-normal">Log in</h1>
           <div class="form-floating">
             <input type="email" class="form-control" id="floatingInput" name="email" value="<?php echo $email;?>" placeholder="name@example.com">
             <label for="floatingInput">Email address</label>

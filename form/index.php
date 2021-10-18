@@ -20,7 +20,7 @@
         $data = htmlspecialchars($data);
         return $data;
       }
-      $email = ""; $pass1 = ""; $pass2 = ""; $date = ""; $passErr = ""; $email_error = "";
+      $email = ""; $pass1 = ""; $pass2 = ""; $date = ""; $errorSignUp = "";
       if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $email = inputCleaner($_POST["email"]);
         $pass1 = inputCleaner($_POST["pass1"]);
@@ -35,7 +35,7 @@
               $sql = "SELECT Usuario_email FROM usuarios WHERE Usuario_email = '$email'";
               $results = $conn->query($sql);
               if (($results->num_rows) > 0) {
-                $email_error = "There is already an account with this email";
+                $errorSignUp = "There is already an account with this email";
               } else {
                 $hash_pass = password_hash($pass1, PASSWORD_DEFAULT);
                 $sql = "INSERT INTO usuarios(Usuario_email, Usuario_clave)
@@ -63,9 +63,12 @@
           }
 
         } else {
-          $passErr = 'Error, passwords do not match!';
+          $errorSignUp = 'Error, passwords do not match!';
         }
       }
+
+      if (!empty($errorSignUp))
+        $errorSignUp_style = 'display: block; opacity: 1;';
      ?>
      <header class="p-3 mb-3 border-bottom">
        <nav id="navbar_bg" class="navbar navbar-expand-md navbar-dark fixed-top ">
@@ -102,12 +105,15 @@
        </nav>
      </header>
     <main>
+      <div class="signupFormHeader">
+        <h2>Sign up Form</h2>
+      </div>
       <!--PASSWORD OR EMAIL ERROR-->
-      <div class="signupError">
-        Error, incorrect email or password.
+      <div class="signupError" style="<?php echo $errorSignUp_style ?>">
+        <?php echo $errorSignUp  ?>
       </div>
       <!---->
-      <div class="form">
+      <div class="form" style="margin-top: 2rem !important; border: none;">
         <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']);?>" method="post" oninput='pass2.setCustomValidity(pass2.value != pass.value ? "Passwords do not match." : "")'>
           <div class="form-group row">
             <!--<label for="inputEmail3" class="col-sm-2 col-form-label">Email: </label>-->
@@ -143,12 +149,7 @@
       </div>
     </main>
     <footer>
-      <div id="error" class="pass_error" style="display:none;">
-        The value of the password input was not strong enough.
-      </div id="error" class="email_error">
-      <div>
-          <?php echo $email_error?>
-      </div>
+
     </footer>
   </body>
 </html>
