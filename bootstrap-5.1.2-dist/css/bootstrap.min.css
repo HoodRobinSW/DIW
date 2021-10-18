@@ -9856,4 +9856,15 @@ input {
 #login_dropdown_ {
   display: none;
 }
+
+.signupError {
+  border: 1px solid black;
+  width: 30%;
+  height: 10vh;
+  margin: 0 auto;
+  text-align: center;
+  position: relative;
+  left: 50;
+  margin-top: 5vh;
+}
 /*# sourceMappingURL=bootstrap.min.css.map */
