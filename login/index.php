@@ -25,38 +25,36 @@
       if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $email = inputCleaner($_POST['email']);
         $pass = inputCleaner($_POST['pass']);
-        $conn = new mysqli("localhost", "alejdnxu", "hFWucoCz1K26", "alejdnxu_portfolio");
-        if ($conn->connect_error) {
-          die("Connection failed: ".$conn->connect_error);
-        } else {
-          $sql = "SELECT Usuario_clave, Usuario_bloqueado FROM usuarios WHERE Usuario_email = '$email'";
-          $results = $conn->query($sql);
-          if ($results->num_rows == 1) {
+        include 'connection.php';
 
-            $db_pass; $bloq;
-            while ($row = $results->fetch_row()) {
-              $db_pass = $row[0];
-              $bloq = $row[1];
-            }
-            $results->free_result();
+        $sql = "SELECT Usuario_clave, Usuario_bloqueado FROM usuarios WHERE Usuario_email = '$email'";
+        $results = $conn->query($sql);
+        if ($results->num_rows == 1) {
 
-            if ($bloq == 0) {
-              if (password_verify($pass, $db_pass)) {
-                $_SESSION['login_signup_display_style'] = 'display: none;';
-                $_SESSION['display_user'] = 'Welcome, '.$email;
-                $_SESSION['session_email'] = $email;
-                $_SESSION['display_user_style'] = 'display: block;';
-                header('Location: ../');
-              } else {
-                $errorSignIn = "Error, verifique su email o contraseña";
-              }
+          $db_pass; $bloq;
+          while ($row = $results->fetch_row()) {
+            $db_pass = $row[0];
+            $bloq = $row[1];
+          }
+          $results->free_result();
+
+          if ($bloq == 0) {
+            if (password_verify($pass, $db_pass)) {
+              $_SESSION['login_signup_display_style'] = 'display: none;';
+              $_SESSION['display_user'] = 'Welcome, '.$email;
+              $_SESSION['session_email'] = $email;
+              $_SESSION['display_user_style'] = 'display: block;';
+              header('Location: ../');
             } else {
-              $verificationError = "visibility: visible";
+              $errorSignIn = "Error, verifique su email o contraseña";
             }
           } else {
-            $errorSignIn = "Error, verifique su email o contraseña";
+            $verificationError = "visibility: visible";
           }
+        } else {
+          $errorSignIn = "Error, verifique su email o contraseña";
         }
+
       }
 
       if (!empty($errorSignIn))

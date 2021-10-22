@@ -9887,3 +9887,65 @@ input {
   margin-top: 2rem;
 }
 /*# sourceMappingURL=bootstrap.min.css.map */
+.profileTable {
+    /* Background color */
+    background-color: #ddd;
+
+    /* Stick to the left */
+    left: 0;
+    position: sticky;
+
+    /* Displayed on top of other rows when scrolling */
+    z-index: 9999;
+}
+
+.profileTableContainer {
+  margin: 3rem 10rem;
+  overflow: hidden;
+}
+
+.profileOptionsContainer {
+  width: 15%;
+  float: left;
+  height: 100%;
+}
+
+.profileOption {
+  height: 5rem;
+  width: 100%;
+  cursor: pointer;
+  padding: 2rem;
+  text-align: center;
+}
+
+.profileOption:hover {
+  background-color: #C1C1C1;
+}
+
+.profileDataContainer {
+  float: left;
+  height: 100%;
+  width: 85%;
+}
+
+.imageBlock {
+  display: flex;
+  justify-content: center;
+  margin-top: 2rem;
+  width: 30%;
+}
+
+.centeredImage {
+  display: flex;
+  justify-content: center;
+}
+
+.sessionEmail {
+  text-align: center;
+}
+
+.editPhoto {
+  position: absolute;
+  top: 40%;
+  left: 59%;
+}

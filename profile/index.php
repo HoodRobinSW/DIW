@@ -1,16 +1,22 @@
 <?php
   session_start();
+  if (isset($_SESSION['session_email'])) {
  ?>
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
   <head>
-    <link href="bootstrap-5.1.2-dist/css/bootstrap.min.css" rel="stylesheet"/>
-    <script src="bootstrap-5.1.2-dist/js/bootstrap.bundle.min.js"></script>
     <meta charset="utf-8">
-     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title></title>
+    <title>Profile</title>
+    <link href="../bootstrap-5.1.2-dist/css/bootstrap.min.css" rel="stylesheet"/>
+    <script src="../bootstrap-5.1.2-dist/js/bootstrap.bundle.min.js"></script>
+    <script type="text/javascript">
+      const onLoadProfilePage = () => {
+        document.querySelector('.profileSettings').style.background = '#C1C1C1';
+
+      }
+    </script>
   </head>
-  <body>
+  <body onload="onLoadProfilePage()">
     <header class="p-3 mb-3 border-bottom">
       <nav id="navbar_bg" class="navbar navbar-expand-md navbar-dark fixed-top ">
         <div class="container-fluid">
@@ -35,9 +41,9 @@
               </a>
               <ul class="dropdown-menu text-small" aria-labelledby="dropdownUser1">
                 <li><a class="dropdown-item" href="#">Settings</a></li>
-                <li><a class="dropdown-item" href="profile">Profile</a></li>
+                <li><a class="dropdown-item" href="#">Profile</a></li>
                 <li><hr class="dropdown-divider"></li>
-                <li><a class="dropdown-item" href="login/logout.php">Sign out</a></li>
+                <li><a class="dropdown-item" href="../login/logout.php">Sign out</a></li>
               </ul>
             </div>
             <!--UNTIL HERE-->
@@ -45,24 +51,37 @@
         </div>
       </nav>
   </header>
-    <main>
-      <div class="container">
-    <div class="row flex-lg-row-reverse align-items-center g-5 py-5">
-      <div class="col-10 col-sm-8 col-lg-6">
-        <img src="profile.png" class="d-block mx-lg-auto img-fluid" alt="Bootstrap Themes" loading="lazy" width="700" height="500">
-      </div>
-      <div class="col-lg-6">
-        <h1 class="display-5 fw-bold lh-1 mb-3">Welcome to my page!</h1>
-        <p class="lead">Quickly design and customize responsive mobile-first sites with Bootstrap,
-          the world’s most popular front-end open source toolkit, featuring Sass variables and mixins,
-          responsive grid system, extensive prebuilt components, and powerful JavaScript plugins.</p>
-        <div class="d-grid gap-2 d-md-flex justify-content-md-start">
-          <button type="button" class="btn btn-primary btn-lg px-4 me-md-2">Primary</button>
-          <button type="button" class="btn btn-outline-secondary btn-lg px-4">Default</button>
+  <main>
+    <div class="profileTableContainer">
+      <div class="profileOptionsContainer">
+        <div class="profileOption profileSettings" onclick="document.querySelector('.profileSettings').style.background = '#C1C1C1'">
+          Profile
+        </div>
+        <div class="profileOption" onclick="document.querySelector('.profileSettings').style.background = '#C1C1C1'">
+          Themes
         </div>
       </div>
+      <div class="profileDataContainer">
+        <div class="centeredImage">
+          <div class="imageBlock">
+            <img src="https://github.com/mdo.png" class="rounded-circle"alt="" width="200" height="200">
+            <form action="index.html" method="post">
+              <input type="image" name="" class="rounded-circle editPhoto" src="https://external-content.duckduckgo.com/iu/?u=http%3A%2F%2Fclipart-library.com%2Fimages_k%2Fcartoon-camera-transparent%2Fcartoon-camera-transparent-13.png&f=1&nofb=1" width="50" height="50">
+            </form>
+          </div>
+        </div>
+        <div class="sessionEmail">
+          <i><?php echo $_SESSION['session_email'] ?></i>
+        </div>
+
+      </div>
     </div>
-  </div>
-    </main>
+  </main>
+  <footer></footer>
   </body>
 </html>
+<?php
+} else {
+  header("Location: ../");
+}
+?>
