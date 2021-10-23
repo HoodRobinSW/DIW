@@ -15,6 +15,7 @@
 
       }
     </script>
+    <script type="text/javascript" src="profile.js"></script>
   </head>
   <body onload="onLoadProfilePage()">
     <header class="p-3 mb-3 border-bottom">
@@ -22,7 +23,7 @@
         <div class="container-fluid">
           <div id="navbar_" class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
-              <li><a id="list_item_" href="" class="nav-link px-2 link-dark">Home</a></li>
+              <li><a id="list_item_" href="../" class="nav-link px-2 link-dark">Home</a></li>
               <!--<li><a href="#" class="nav-link px-2 link-dark">Inventory</a></li>
               <li><a href="#" class="nav-link px-2 link-dark">Customers</a></li>
               <li><a href="#" class="nav-link px-2 link-dark">Products</a></li>-->
@@ -37,7 +38,7 @@
             <!--THIS TOGGLES WHEN THE USER LOGINS-->
             <div id="login_dropdown_" class="dropdown text-end" style="<?php echo $_SESSION['display_user_style']; ?>">
               <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
-                <img src="https://github.com/mdo.png" alt="mdo" class="rounded-circle" width="32" height="32">
+                <img src="../images/profile-silhouette.png" alt="mdo" class="rounded-circle" width="32" height="32">
               </a>
               <ul class="dropdown-menu text-small" aria-labelledby="dropdownUser1">
                 <li><a class="dropdown-item" href="#">Settings</a></li>
@@ -54,26 +55,29 @@
   <main>
     <div class="profileTableContainer">
       <div class="profileOptionsContainer">
-        <div class="profileOption profileSettings" onclick="document.querySelector('.profileSettings').style.background = '#C1C1C1'">
+        <div class="profileOption profileSettings" id="option1" onclick="optionFocusProfile(this)">
           Profile
         </div>
-        <div class="profileOption" onclick="document.querySelector('.profileSettings').style.background = '#C1C1C1'">
+        <div class="profileOption" id="option2" onclick="optionFocusThemes(this)">
           Themes
         </div>
       </div>
       <div class="profileDataContainer">
         <div class="centeredImage">
           <div class="imageBlock">
-            <img src="https://github.com/mdo.png" class="rounded-circle"alt="" width="200" height="200">
-            <form action="index.html" method="post">
-              <input type="image" name="" class="rounded-circle editPhoto" src="https://external-content.duckduckgo.com/iu/?u=http%3A%2F%2Fclipart-library.com%2Fimages_k%2Fcartoon-camera-transparent%2Fcartoon-camera-transparent-13.png&f=1&nofb=1" width="50" height="50">
+            <img src="../images/profile-silhouette.png" class="rounded-circle"alt="" width="200" height="200">
+            <form onclick="fileUpload()" method="post" class="editPhoto">
+              <input type="image" name="" class="rounded-circle" src="../images/edit.png" width="50" height="50">
             </form>
           </div>
         </div>
         <div class="sessionEmail">
-          <i><?php echo $_SESSION['session_email'] ?></i>
+          <i><?php echo $_SESSION['session_email']; ?></i>
         </div>
-
+        <form action="editProfilePhoto.php" method="post">
+          <input type="file" id="fileUpload" name="imageUpload" hidden>
+          <input id="save" type="submit" name="submit" value="Save">
+        </form>
       </div>
     </div>
   </main>

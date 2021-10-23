@@ -9887,17 +9887,6 @@ input {
   margin-top: 2rem;
 }
 /*# sourceMappingURL=bootstrap.min.css.map */
-.profileTable {
-    /* Background color */
-    background-color: #ddd;
-
-    /* Stick to the left */
-    left: 0;
-    position: sticky;
-
-    /* Displayed on top of other rows when scrolling */
-    z-index: 9999;
-}
 
 .profileTableContainer {
   margin: 3rem 10rem;
@@ -9919,7 +9908,7 @@ input {
 }
 
 .profileOption:hover {
-  background-color: #C1C1C1;
+  background-color: #EFEFEF;
 }
 
 .profileDataContainer {
@@ -9932,7 +9921,7 @@ input {
   display: flex;
   justify-content: center;
   margin-top: 2rem;
-  width: 30%;
+  width: 15rem;
 }
 
 .centeredImage {
@@ -9946,6 +9935,16 @@ input {
 
 .editPhoto {
   position: absolute;
-  top: 40%;
-  left: 59%;
+  margin-top: 8rem;
+  margin-left: 10rem;
+}
+
+.editPhoto input {
+  background-color: white;
+}
+
+#save {
+  position: absolute;
+  top: 90%;
+  left: 90%;
 }
