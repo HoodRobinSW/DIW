@@ -66,15 +66,15 @@
         <div class="centeredImage">
           <div class="imageBlock">
             <img src="../images/profile-silhouette.png" class="rounded-circle"alt="" width="200" height="200">
-            <form onclick="fileUpload()" method="post" class="editPhoto">
-              <input type="image" name="" class="rounded-circle" src="../images/edit.png" width="50" height="50">
-            </form>
+            <a href="#" onclick="fileUpload()" method="post" class="editPhoto">
+              <img class="rounded-circle" src="../images/edit.png" width="50" height="50">
+            </a>
           </div>
         </div>
         <div class="sessionEmail">
           <i><?php echo $_SESSION['session_email']; ?></i>
         </div>
-        <form action="editProfilePhoto.php" method="post">
+        <form action="editProfilePhoto.php" method="post" enctype="multipart/form-data">
           <input type="file" id="fileUpload" name="imageUpload" hidden>
           <input id="save" type="submit" name="submit" value="Save">
         </form>
