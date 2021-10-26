@@ -80,7 +80,8 @@
              <!--THIS TOGGLES WHEN THE USER LOGINS-->
              <div id="login_dropdown_" class="dropdown text-end" style="<?php echo $_SESSION['display_user_style'];?>">
                <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
-                 <img src="../images/profile-silhouette.png" alt="mdo" class="rounded-circle" width="32" height="32">
+                 <img src="<?php if (isset($_SESSION['profile_image'])) {
+                   echo 'uploads/' . $_SESSION['profile_image'];} else {echo '../images/profile-silhouette.png';}?>" alt="mdo" class="rounded-circle" width="32" height="32">
                </a>
                <ul class="dropdown-menu text-small" aria-labelledby="dropdownUser1">
                  <li><a class="dropdown-item" href="#">Settings</a></li>

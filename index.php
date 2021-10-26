@@ -1,5 +1,13 @@
 <?php
   session_start();
+
+  if (isset($_SESSION['session_email'])) {
+    include "login/connection.php";
+    $sessionEmail = $_SESSION['session_email'];
+    $sql = "SELECT Usuario_fotografia FROM usuarios WHERE Usuario_email = '$sessionEmail'";
+    $result = $conn->query($sql);
+    $_SESSION['profile_image'] = $result->fetch_row()[0];
+  }
  ?>
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
@@ -31,7 +39,8 @@
             <!--THIS TOGGLES WHEN THE USER LOGINS-->
             <div id="login_dropdown_" class="dropdown text-end" style="<?php echo $_SESSION['display_user_style']; ?>">
               <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
-                <img src="images/profile-silhouette.png" alt="mdo" class="rounded-circle" width="32" height="32">
+                <img src="<?php if (isset($_SESSION['profile_image'])) {
+                  echo 'profile/uploads/' . $_SESSION['profile_image'];} else {echo 'images/profile-silhouette.png';}?>" class="rounded-circle" width="32" height="32">
               </a>
               <ul class="dropdown-menu text-small" aria-labelledby="dropdownUser1">
                 <li><a class="dropdown-item" href="#">Settings</a></li>
