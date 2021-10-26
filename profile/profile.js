@@ -9,3 +9,8 @@ const optionFocusThemes = (obj) => {
 const fileUpload = () => {
   document.getElementById('fileUpload').click();
 }
+
+const loadFile = (event) => {
+  let output = document.getElementById('profileImage');
+  output.src = URL.createObjectURL(event.target.files[0]);
+}

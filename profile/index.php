@@ -69,7 +69,7 @@
           <div class="imageBlock">
             <img src="<?php if (isset($_SESSION['profile_image'])) {
               echo 'uploads/' . $_SESSION['profile_image'];} else {echo '../images/profile-silhouette.png';}?>"
-              class="rounded-circle" width="200" height="200">
+              class="rounded-circle" id="profileImage" width="200" height="200">
             <a href="#" onclick="fileUpload()" method="post" class="editPhoto">
               <img class="rounded-circle" src="../images/edit.png" width="50" height="50">
             </a>
@@ -79,7 +79,7 @@
           <i><?php echo $_SESSION['session_email']; ?></i>
         </div>
         <form action="editProfilePhoto.php" method="post" enctype="multipart/form-data">
-          <input type="file" id="fileUpload" name="imageUpload" hidden>
+          <input type="file" onchange="loadFile(event)" id="fileUpload" name="imageUpload" hidden>
           <input id="save" type="submit" name="submit" value="Save">
         </form>
       </div>

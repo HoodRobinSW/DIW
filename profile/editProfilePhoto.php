@@ -33,19 +33,16 @@
       // if everything is ok, try to upload file
     } else {
       if (move_uploaded_file($_FILES["imageUpload"]["tmp_name"], $target_file)) {
-        echo "The file ". htmlspecialchars( basename( $_FILES["imageUpload"]["name"])). " has been uploaded.";
+        include '../login/connection.php';
+        $fileName = $_FILES['imageUpload']['name'];
+        $emailSession = $_SESSION['session_email'];
+        $sql = "UPDATE usuarios SET Usuario_fotografia = '$fileName' WHERE Usuario_email = '$emailSession'";
+        $conn->query($sql);
       } else {
         echo "Sorry, there was an error uploading your file.";
       }
     }
   }
 
-  include '../login/connection.php';
-  $fileName = $_FILES['imageUpload']['name'];
-  $emailSession = $_SESSION['session_email'];
-  $sql = "UPDATE usuarios SET Usuario_fotografia = '$fileName' WHERE Usuario_email = '$emailSession'";
-  $conn->query($sql);
-
   header("Location: ../");
-
 ?>
