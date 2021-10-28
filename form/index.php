@@ -20,12 +20,13 @@
         $data = htmlspecialchars($data);
         return $data;
       }
-      $email = ""; $pass1 = ""; $pass2 = ""; $date = ""; $errorSignUp = "";
+      $email = ""; $pass1 = ""; $pass2 = ""; $date = ""; $errors = [];
       if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $email = inputCleaner($_POST["email"]);
         $pass1 = inputCleaner($_POST["pass1"]);
         $pass2 = inputCleaner($_POST["pass2"]);
         $date = inputCleaner($_POST["date"]);
+        $username = inputCleaner($_POST["username"]);
 
         if ($pass1 == $pass2) {
           $conn = new mysqli("localhost", "alejdnxu", "hFWucoCz1K26", "alejdnxu_portfolio");
@@ -33,13 +34,17 @@
             die("Connection failed: ".$conn->connect_error);
           } else {
               $sql = "SELECT Usuario_email FROM usuarios WHERE Usuario_email = '$email'";
-              $results = $conn->query($sql);
-              if (($results->num_rows) > 0) {
-                $errorSignUp = "There is already an account with this email";
+              $resultQueryEmail = $conn->query($sql);
+              $sql = "SELECT Usuario_nick FROM usuarios WHERE Usuario_nick = '$username'";
+              $resultQueryNick = $conn->query($sql);
+              if (($resultQueryEmail->num_rows) > 0) {
+                $errors[] = "There is already an account with this email";
+              } else if(($resultQueryNick->num_rows) > 0) {
+                $errors[] = "This nick is taken";
               } else {
                 $hash_pass = password_hash($pass1, PASSWORD_DEFAULT);
-                $sql = "INSERT INTO usuarios(Usuario_email, Usuario_clave)
-                VALUES ('$email', '$hash_pass')";
+                $sql = "INSERT INTO usuarios(Usuario_email, Usuario_clave, Usuario_nick)
+                VALUES ('$email', '$hash_pass', '$username')";
                 if ($conn->query($sql)) {
                   $sql = "SELECT Usuario_id FROM usuarios WHERE Usuario_email = '$email'";
                   $results = $conn->query($sql);
@@ -67,7 +72,7 @@
         }
       }
 
-      if (!empty($errorSignUp))
+      if (!empty($errors))
         $errorSignUp_style = 'display: block; opacity: 1;';
      ?>
      <header class="p-3 mb-3 border-bottom">
@@ -110,7 +115,9 @@
       </div>
       <!--PASSWORD OR EMAIL ERROR-->
       <div class="signupError" style="<?php echo $errorSignUp_style ?>">
-        <?php echo $errorSignUp  ?>
+        <?php foreach ($errors as $error) {
+          echo $error."<br/>";
+        }  ?>
       </div>
       <!---->
       <div class="form" style="margin-top: 2rem !important; border: none;">
@@ -119,6 +126,12 @@
             <!--<label for="inputEmail3" class="col-sm-2 col-form-label">Email: </label>-->
             <div class="col-sm-10">
               <input type="email" class="form-control" id="inputEmail3" placeholder="Email" name="email" value="<?php echo $email; ?>" required>
+            </div>
+          </div>
+          <div class="form-group row">
+            <!--<label for="inputPassword3" class="col-sm-2 col-form-label">Password: </label>-->
+            <div class="col-sm-10">
+              <input type="text" class="form-control" id="inputUsername" placeholder="Username" name="username" required>
             </div>
           </div>
           <div class="form-group row">

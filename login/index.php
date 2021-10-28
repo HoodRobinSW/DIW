@@ -27,14 +27,15 @@
         $pass = inputCleaner($_POST['pass']);
         include 'connection.php';
 
-        $sql = "SELECT Usuario_clave, Usuario_bloqueado FROM usuarios WHERE Usuario_email = '$email'";
+        $sql = "SELECT Usuario_clave, Usuario_bloqueado, Usuario_id FROM usuarios WHERE Usuario_email = '$email'";
         $results = $conn->query($sql);
         if ($results->num_rows == 1) {
 
-          $db_pass; $bloq;
+          $db_pass; $bloq;$user_Id;
           while ($row = $results->fetch_row()) {
             $db_pass = $row[0];
             $bloq = $row[1];
+            $_SESSION['user_Id'] = $row[2];
           }
           $results->free_result();
 

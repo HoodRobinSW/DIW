@@ -2,6 +2,8 @@
   session_start();
 
   $target_file = "uploads/" . basename($_FILES["imageUpload"]["name"]);
+  $extension = end(explode(".", $target_file));
+  $newFilename = $_SESSION['user_Id'] . "." . $extension;
   $uploadOk = 0;
   $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
 
@@ -15,10 +17,10 @@
       $uploadOk = 0;
     }
 
-    if (file_exists($target_file)) {
+    /*if (file_exists($target_file)) {
       echo "Sorry, file already exists.";
       $uploadOk = 0;
-    }
+    }*/
     if ($_FILES["imageUpload"]["size"] > 500000) {
       echo "Sorry, your file is too large.";
       $uploadOk = 0;
@@ -32,11 +34,11 @@
       echo "Sorry, your file was not uploaded.";
       // if everything is ok, try to upload file
     } else {
-      if (move_uploaded_file($_FILES["imageUpload"]["tmp_name"], $target_file)) {
+      if (move_uploaded_file($_FILES["imageUpload"]["tmp_name"], "uploads/" . $newFilename )) {
         include '../login/connection.php';
-        $fileName = $_FILES['imageUpload']['name'];
+        /*$fileName = $_FILES['imageUpload']['name'];*/
         $emailSession = $_SESSION['session_email'];
-        $sql = "UPDATE usuarios SET Usuario_fotografia = '$fileName' WHERE Usuario_email = '$emailSession'";
+        $sql = "UPDATE usuarios SET Usuario_fotografia = '$newFilename' WHERE Usuario_email = '$emailSession'";
         $conn->query($sql);
       } else {
         echo "Sorry, there was an error uploading your file.";
