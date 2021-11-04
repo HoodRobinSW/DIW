@@ -1,0 +1,335 @@
+@font-face {
+  font-family: elegantType;
+  src: url(../../fonts/ELEGANT\ TYPEWRITER\ Regular.ttf);
+}
+
+@media screen and (max-width: 500px) {
+  nav {
+    height: 4rem !important ;
+  }
+  .inputdiv {
+    width: 100%;
+    text-align: left;
+  }
+
+  .login_form, .form_entry {
+    width: 90% !important;
+  }
+
+  label {
+    position: static !important;
+  }
+}
+
+@media screen and (max-width: 900px) {
+  #frontPage_image {
+    float: none !important;
+    width: 0 auto !important;
+  }
+
+  #frontPage_text {
+    width: 100% !important;
+    margin: 0 auto;
+  }
+}
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+.center_item {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.center_item_vertically {
+  position: absolute;
+  top: 50%;
+  transform: translate(0, -50%);
+}
+
+#list_item_ {
+  border-radius: 5px;
+  color: white;
+  transition: background-color 0.3s ease-in-out;
+  padding: 1vh;
+  text-decoration: none;
+}
+
+#list_item_:hover {
+  background-color: #DB8A74;
+}
+
+ul.main-ul-container {
+  list-style: none;
+  margin: 0 auto;
+  display: flex;
+}
+
+ul.main-ul-container li {
+  float: left;
+  display: flex;
+}
+
+ul.main-ul-container li:first-child {
+  margin-right: 2vh;
+}
+
+.homeButton-container {
+  float: left;
+  display: flex;
+}
+
+nav {
+  top: 0;
+  /*opacity: 0.5;*/
+  background-color: #444054;
+  padding: 0.5rem 0;
+  position: fixed;
+  width: 100%;
+  height: 3rem;
+}
+
+#navbar_ {
+  width: 90%;
+  margin: 0 auto;
+  overflow: hidden;
+}
+
+
+div.form {
+  margin-top: 5rem !important;
+  border-radius: 1rem;
+  padding: 15px;
+  border: 1px solid black;
+  margin: 0 auto;
+  width: 35%;
+}
+
+input {
+  display: flex;
+  margin: 0 auto;
+}
+
+#login_signup_ {
+  display: flex;
+  float: right;
+}
+
+#login_dropdown_ {
+  border-radius: 50%;
+  border: 1px solid black;
+  padding: 0.5vh;
+  float: right;
+  display: none;
+}
+
+.userDropDown {
+  display: none;
+}
+
+.signupError {
+  border: 1px solid #FFA0A0;
+  width: 20rem;
+  height: 2rem;
+  padding: 3vh 0;
+  margin: 2rem auto;
+  text-align: center;
+  position: relative;
+  margin-top: 5vh;
+  display: none;
+  background-color: #FFE2E2;
+  border-radius: 1rem;
+  opacity: 0;
+  transition: opacity 2s;
+}
+
+.signupFormHeader {
+  width: 70%;
+  text-align: center;
+  margin: 0 auto;
+  margin-top: 6rem;
+  padding: 2vh 0;
+}
+
+.signupFormFields {
+  width: 70%;
+  margin: 0 auto;
+}
+
+.login_form {
+  margin: 0 auto;
+  top: 55%;
+  width: 30rem;
+  overflow: hidden;
+}
+
+.modal {
+  display: none;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.8);
+}
+
+.modal-dialog {
+  background-color: white;
+  padding: 5vh;
+  top: 30%;
+  border-radius: 15px;
+}
+
+.modal-title, .modal-text {
+  text-align: center;
+  padding: 2vh 0;
+}
+
+.modal-footer {
+  width: 20rem;
+  text-align: center;
+  margin: 0 auto;
+}
+
+.form_entry {
+  display: flex;
+  margin: 0 auto;
+  position: relative;
+}
+
+.center_form_entry {
+  height: 100%;
+  margin: 0 auto;
+  position: relative;
+}
+
+.labeldiv{
+  width: 10rem;
+  float: left;
+  text-align: left;
+  height: 100%;
+}
+
+.inputdiv {
+  float: right;
+}
+
+label {
+  position: absolute;
+  top: 50%;
+  transform: translate(0, -50%);
+  width: 100%;
+}
+
+input[type="email"], input[type="password"]{
+  height: 5vh;
+  width: 100%;
+}
+
+.rememberdiv {
+  text-align: center;
+}
+
+.login_pass {
+  top: 13rem;
+}
+
+.login_button_div {
+  text-align: center;
+}
+
+button[type="submit"], button[type="button"] {
+  height: 4vh;
+  width: 10vh;
+}
+
+
+.someSpace {
+  padding: 1vh 0;
+}
+
+.main_container {
+  z-index: -1;
+  height: 90%;
+  width: 90%;
+  margin: 6rem auto auto auto;
+  position: relative;
+  overflow: hidden;
+}
+
+#frontPage_image {
+  width: 300px;
+  height: 300px;
+  float: right;
+  margin: 0 auto;
+}
+
+#frontPage_text {
+  position: relative;
+  width: 60%;
+  height: 15rem;
+  text-align: center;
+}
+
+.profileTableContainer {
+  margin: 3rem 10rem;
+  overflow: hidden;
+}
+
+.profileOptionsContainer {
+  width: 15%;
+  float: left;
+  height: 100%;
+}
+
+.profileOption {
+  height: 5rem;
+  width: 100%;
+  cursor: pointer;
+  padding: 2rem;
+  text-align: center;
+}
+
+.profileOption:hover {
+  background-color: #EFEFEF;
+}
+
+.profileDataContainer {
+  float: left;
+  height: 100%;
+  width: 85%;
+}
+
+.imageBlock {
+  display: flex;
+  justify-content: center;
+  margin-top: 2rem;
+  width: 15rem;
+}
+
+.centeredImage {
+  display: flex;
+  justify-content: center;
+}
+
+.sessionEmail {
+  text-align: center;
+}
+
+.editPhoto {
+  position: absolute;
+  margin-top: 8rem;
+  margin-left: 10rem;
+}
+
+.editPhoto input {
+  background-color: white;
+}
+
+#save {
+  position: absolute;
+  top: 90%;
+  left: 90%;
+}
