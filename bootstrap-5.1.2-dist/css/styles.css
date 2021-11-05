@@ -109,11 +109,6 @@ div.form {
   width: 35%;
 }
 
-input {
-  display: flex;
-  margin: 0 auto;
-}
-
 #login_signup_ {
   display: flex;
   float: right;
@@ -164,7 +159,7 @@ input {
   margin: 0 auto;
   top: 55%;
   width: 30rem;
-  overflow: hidden;
+  padding: 1vh;
 }
 
 .modal {
@@ -200,36 +195,50 @@ input {
 }
 
 .center_form_entry {
-  height: 100%;
   margin: 0 auto;
   position: relative;
+  padding: 1vh;
+  display: flex;
 }
 
 .labeldiv{
-  width: 10rem;
+  position: relative;
+  width: 50%;
+  height: 100%;
   float: left;
   text-align: left;
-  height: 100%;
+  display: flex;
 }
 
 .inputdiv {
+  position: relative;
+  height: 100%;
+  width: 50%;
   float: right;
+  display: flex;
+}
+
+.remember_check {
+  margin-left: 2vh;
+}
+
+input[type="checkbox"] {
+  margin: 0 auto;
 }
 
 label {
-  position: absolute;
-  top: 50%;
-  transform: translate(0, -50%);
+  padding: 1vh 0;
   width: 100%;
+  height: 100%;
 }
 
 input[type="email"], input[type="password"]{
-  height: 5vh;
+
   width: 100%;
+  margin: 0 auto;
 }
 
 .rememberdiv {
-  text-align: center;
 }
 
 .login_pass {

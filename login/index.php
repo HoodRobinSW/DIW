@@ -128,10 +128,10 @@
           <div class="form_entry someSpace">
             <div class="center_form_entry">
               <div class="rememberdiv">
-                Remember me
+                <label for="rembember">Remember me</label>
               </div>
-              <div style="text-align:center;margin-top:0.5rem;">
-                <input type="checkbox" value="remember-me">
+              <div class="remember_check">
+                <input type="checkbox" name="remember" value="remember-me">
               </div>
             </div>
           </div>
