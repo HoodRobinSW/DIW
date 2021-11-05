@@ -5,7 +5,7 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
   <head>
-    <link href="../bootstrap-5.1.2-dist/css/styles.css" rel="stylesheet"/>
+    <link href="../styles/styles.css" rel="stylesheet"/>
     <link rel="icon" href="../page-icon.png" type="image/gif">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -148,14 +148,12 @@
       <div class="modal center_item" role="dialog" id="modalChoice" style="<?php echo $verificationError;?>">
         <div class="modal-dialog center_item" role="document">
           <div>
-            <div>
-              <h3 class="modal-title">Email verification required</h3>
-              <p class="modal-text">We've already sent you a verification email, please check your inbox</p>
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-lg btn-link fs-6 text-decoration-none col-6 m-0 rounded-0 border-right"><strong>Resend</strong></button>
-              <button type="button" class="btn btn-lg btn-link fs-6 text-decoration-none col-6 m-0 rounded-0" data-bs-dismiss="modal" onclick="document.getElementById('modalChoice').style.visibility = 'hidden'">Close</button>
-            </div>
+            <h3 class="modal-title">Email verification required</h3>
+            <p class="modal-text">We've already sent you a verification email, please check your inbox</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" ><strong>Resend</strong></button>
+            <button type="button" onclick="document.getElementById('modalChoice').style.visibility = 'hidden'">Close</button>
           </div>
         </div>
       </div>

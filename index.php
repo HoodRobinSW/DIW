@@ -12,7 +12,7 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
   <head>
-    <link href="bootstrap-5.1.2-dist/css/styles.css" rel="stylesheet"/>
+    <link href="styles/styles.css" rel="stylesheet"/>
     <link rel="icon" href="page-icon.png" type="image/gif">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
