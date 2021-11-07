@@ -9,25 +9,53 @@
     <meta charset="utf-8">
     <link href="../styles/styles.css" rel="stylesheet"/>
     <script type="text/javascript" src="passControl.js"></script>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registro</title>
   </head>
   <body>
     <?php
+
       function inputCleaner($data) {
         $data = trim($data);
         $data = stripslashes($data);
         $data = htmlspecialchars($data);
         return $data;
       }
-      $email = ""; $pass1 = ""; $pass2 = ""; $date = ""; $errors = [];
+
+      function idValidator($identificator) {
+        $letters = ['T', 'R', 'W', 'A', 'G', 'M', 'Y', 'F', 'P', 'D', 'X', 'B',
+        'N','J', 'Z', 'S', 'Q', 'V', 'H', 'L', 'C', 'K', 'E', 'T'];
+        $idLetter = substr($identificator, 8);
+        $idNums = substr($identificator, 0, 8);
+        if($idLetter == $letters[$idNums % 23]) {
+          return true;
+        } else {
+          return false;
+        }
+      }
+
       if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $email = inputCleaner($_POST["email"]);
+        $fname = inputCleaner($_POST["fname"]);
+        $lname = inputCleaner($_POST["lname"]);
+        $username = inputCleaner($_POST["username"]);
+        $identificator = inputCleaner($_POST["identificator"]);
+        $address = inputCleaner($_POST["address"]);
+        $country = inputCleaner($_POST["country"]);
+        $province = inputCleaner($_POST["province"]);
         $pass1 = inputCleaner($_POST["pass1"]);
         $pass2 = inputCleaner($_POST["pass2"]);
         $date = inputCleaner($_POST["date"]);
-        $username = inputCleaner($_POST["username"]);
 
-        if ($pass1 == $pass2) {
+        $errors = [];
+        if ($pass1 != $pass2) {
+          array_push($errors, '- Error, passwords do not match!');
+        }
+        if (!idValidator($identificator)) {
+          array_push($errors, '- Error, invalid Id');
+        }
+        if (empty($errors)) {
           $conn = new mysqli("localhost", "alejdnxu", "hFWucoCz1K26", "alejdnxu_portfolio");
           if ($conn->connect_error) {
             die("Connection failed: ".$conn->connect_error);
@@ -37,9 +65,9 @@
               $sql = "SELECT Usuario_nick FROM usuarios WHERE Usuario_nick = '$username'";
               $resultQueryNick = $conn->query($sql);
               if (($resultQueryEmail->num_rows) > 0) {
-                $errors[] = "There is already an account with this email";
+                array_push($errors, "- There is already an account with this email");
               } else if(($resultQueryNick->num_rows) > 0) {
-                $errors[] = "This nick is taken";
+                array_push($errors, "- This nick is taken");
               } else {
                 $hash_pass = password_hash($pass1, PASSWORD_DEFAULT);
                 $sql = "INSERT INTO usuarios(Usuario_email, Usuario_clave, Usuario_nick)
@@ -51,23 +79,22 @@
                   $verification_token = bin2hex(openssl_random_pseudo_bytes(16));
                   $sql = "UPDATE usuarios SET Usuario_token_aleatorio = '$verification_token' WHERE Usuario_email = '$email'";
                   $conn->query($sql);
-                  echo 'Registered successfully';
+                  $_SESSION['successfullyRegistered'] = 'Successfully Registered<br/>Check your email to validate your account.';
                   include 'welcome_email.php';
                   /*--Generating a verification token--*/
                   $verification_url = "https://www.alejandroortegaguerra.me/login/verify.php?t=$verification_token&user=$user_id";
-                  $link = "<a href='".$verification_url."'>".$verification_url."</a>";
-                  $message_eng .= $link;
-                  mail($email, $subject, $message_eng);
-                  /*INTRODUCING THE TOKEN WITHIN THE DATABASE*/
+                  $message_es .= " ".$verification_url;
+                  if (mail($email, $subject, $message_es)) {
+                    header("Location: ../");
+                  } else {
+                    array_push($errors, "- There was an error sending the email.");
+                  }
                 } else {
-                  echo 'Error: '.$sql.'<br/>'.$conn->error;
+                  array_push($errors, '- Error: '.$sql.'<br/>'.$conn->error);
                 }
             }
             $conn->close();
           }
-
-        } else {
-          $errorSignUp = 'Error, passwords do not match!';
         }
       }
 
@@ -112,9 +139,11 @@
       </div>
       <!--PASSWORD OR EMAIL ERROR-->
       <div class="signupError" style="<?php echo $errorSignUp_style ?>">
-        <?php foreach ($errors as $error) {
-          echo $error."<br/>";
-        }  ?>
+        <div>
+          <?php foreach ($errors as $error) {
+            echo "$error <br/>";
+          }  ?>
+        </div>
       </div>
       <!---->
       <div class="signup_form">
@@ -126,9 +155,35 @@
           </div>
           <div class="form_entry">
             <div class="signup_input">
-              <input type="text" placeholder="Username" name="username" required>
+              <input type="text" placeholder="First Name" name="fname" value="<?php echo $fname; ?>" required>
             </div>
-          </div class="signup_input">
+            <div class="signup_input">
+              <input type="text" placeholder="Last Name" name="lname" value="<?php echo $lname; ?>" required>
+            </div>
+          </div>
+          <div class="form_entry">
+            <div class="signup_input">
+              <input type="text" placeholder="Username" name="username" value="<?php echo $username; ?>" required>
+            </div>
+            <div class="signup_input">
+              <input type="text" placeholder="Identificator" name="identificator" pattern="^\d{8}[A-Za-z]$" value="<?php echo $identificator; ?>" required>
+            </div>
+          </div>
+          <div class="form_entry">
+            <div class="signup_input">
+              <input type="text" placeholder="Address" name="address" value="<?php echo $address; ?>">
+            </div>
+          </div>
+
+          <div class="form_entry">
+            <div class="signup_input">
+              <input type="text" placeholder="Country" name="country" value="<?php echo $country; ?>">
+            </div>
+            <div class="signup_input">
+              <input type="text" placeholder="Province" name="province" value="<?php echo $province; ?>">
+            </div>
+          </div>
+
           <div class="form_entry">
             <div class="signup_input">
               <input type="password" placeholder="Password" name="pass1"
@@ -141,6 +196,9 @@
             </div>
           </div>
           <div class="form_entry">
+            <div class="signup_input" style="text-align: center">
+              <label for="date">Birth Date:</label>
+            </div>
             <div class="signup_input">
               <input type="date" name="date" value="<?php echo $birthDate; ?>" required>
             </div>

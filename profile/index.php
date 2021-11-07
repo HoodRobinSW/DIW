@@ -8,8 +8,7 @@
   <head>
     <meta charset="utf-8">
     <title>Profile</title>
-    <link href="../bootstrap-5.1.2-dist/css/bootstrap.min.css" rel="stylesheet"/>
-    <script src="../bootstrap-5.1.2-dist/js/bootstrap.bundle.min.js"></script>
+    <link href="../styles/styles.css" rel="stylesheet"/>
     <script type="text/javascript">
       const onLoadProfilePage = () => {
         document.querySelector('.profileSettings').style.background = '#C1C1C1';
@@ -19,40 +18,38 @@
     <script type="text/javascript" src="profile.js"></script>
   </head>
   <body onload="onLoadProfilePage()">
-    <header class="p-3 mb-3 border-bottom">
-      <nav id="navbar_bg" class="navbar navbar-expand-md navbar-dark fixed-top ">
-        <div class="container-fluid">
-          <div id="navbar_" class="collapse navbar-collapse" id="navbarCollapse">
-            <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
-              <li><a id="list_item_" href="../" class="nav-link px-2 link-dark">Home</a></li>
-              <!--<li><a href="#" class="nav-link px-2 link-dark">Inventory</a></li>
-              <li><a href="#" class="nav-link px-2 link-dark">Customers</a></li>
-              <li><a href="#" class="nav-link px-2 link-dark">Products</a></li>-->
-            </ul>
-            <!--THIS TOGGLES WHEN THE USER LOGINS; DISPLAY NONE;-->
-            <div id="login_signup_" style='<?php echo $_SESSION['login_signup_display_style']; ?>'>
-              <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
-                <li><a id="list_item_" class="nav-link px-2 link-dark" href="login/">Login</a></li>
-                <li><a id="list_item_" class="nav-link px-2 link-dark" href="form/">Sign up</a></li>
-              </ul>
-            </div>
-            <!--THIS TOGGLES WHEN THE USER LOGINS-->
-            <div id="login_dropdown_" class="dropdown text-end" style="<?php echo $_SESSION['display_user_style']; ?>">
-              <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
-                <img src="<?php if (isset($_SESSION['profile_image'])) {
-                  echo 'uploads/' . $_SESSION['profile_image'];} else {echo '../images/profile-silhouette.png';}?>" alt="mdo" class="rounded-circle" width="32" height="32">
-              </a>
-              <ul class="dropdown-menu text-small" aria-labelledby="dropdownUser1">
-                <li><a class="dropdown-item" href="#">Settings</a></li>
-                <li><a class="dropdown-item" href="#">Profile</a></li>
-                <li><hr class="dropdown-divider"></li>
-                <li><a class="dropdown-item" href="../login/logout.php">Sign out</a></li>
-              </ul>
-            </div>
-            <!--UNTIL HERE-->
+    <header>
+      <nav>
+        <div id="navbar_" class="center_item">
+          <div class="homeButton-container center_item_vertically">
+            <a id="list_item_" href="../" class="">Home</a>
           </div>
+
+          <!--THIS TOGGLES WHEN THE USER LOGINS; DISPLAY NONE;-->
+          <div id="login_signup_" style='<?php echo $_SESSION['login_signup_display_style']; ?>'>
+            <ul class="main-ul-container">
+              <li><a id="list_item_" class="" href="login/">Login</a></li>
+              <li><a id="list_item_" class="" href="form/">Sign up</a></li>
+            </ul>
+          </div>
+          <!--THIS TOGGLES WHEN THE USER LOGINS-->
+          <div id="login_dropdown_" style="<?php echo $_SESSION['display_user_style']; ?>">
+            <a href="" class="">
+              <img src="<?php if (isset($_SESSION['profile_image'])) {
+                echo 'profile/uploads/' . $_SESSION['profile_image'];} else {echo '../images/profile-silhouette.png';}?>" width="32" height="32">
+            </a>
+            <ul class="userDropDown">
+              <!-- <li><a class="dropdown-item" href="#">Settings</a></li> -->
+              <li><a class="dropdown-item" href="">Profile</a></li>
+              <li><hr></li>
+              <li><a class="dropdown-item" href="../login/logout.php">Sign out</a></li>
+            </ul>
+          </div>
+          <!--UNTIL HERE-->
         </div>
+
       </nav>
+
   </header>
   <main>
     <div class="profileTableContainer">

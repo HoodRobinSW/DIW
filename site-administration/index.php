@@ -2,7 +2,7 @@
   session_start();
 
   if (isset($_SESSION['session_email'])) {
-    include "login/connection.php";
+    include "../login/connection.php";
     $sessionEmail = $_SESSION['session_email'];
     $sql = "SELECT Usuario_fotografia FROM usuarios WHERE Usuario_email = '$sessionEmail'";
     $result = $conn->query($sql);
@@ -16,7 +16,7 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
   <head>
-    <link href="styles/styles.css" rel="stylesheet"/>
+    <link href="../styles/styles.css" rel="stylesheet"/>
     <link rel="icon" href="page-icon.png" type="image/gif">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -41,7 +41,7 @@
           <div id="login_dropdown_" style="<?php echo $_SESSION['display_user_style']; ?>">
             <a href="" class="">
               <img src="<?php if (isset($_SESSION['profile_image'])) {
-                echo 'profile/uploads/' . $_SESSION['profile_image'];} else {echo 'images/profile-silhouette.png';}?>" width="32" height="32">
+                echo 'profile/uploads/' . $_SESSION['profile_image'];} else {echo '../images/profile-silhouette.png';}?>" width="32" height="32">
             </a>
             <ul class="userDropDown">
               <!-- <li><a class="dropdown-item" href="#">Settings</a></li> -->

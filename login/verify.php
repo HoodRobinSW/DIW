@@ -17,6 +17,7 @@
         if ($results->num_rows == 1) {
           $sql = "UPDATE usuarios SET Usuario_bloqueado = 0 WHERE Usuario_id = '$user'";
           if ($conn->query($sql)) {
+            session_unset($_SESSION['successfullyRegistered']);
             header("Location: ./");
           } else {
             echo "Error updating record: " . $conn->error;

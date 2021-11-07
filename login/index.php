@@ -22,13 +22,13 @@
 
       $_SESSION['login_signup_display_style'] = "";
       $_SESSION['display_user_style'] = "";
-      $email = ""; $pass = ""; $verificationError = "";$errorSignIp_style = "";$errorSignIn = "";
+      $verificationError = "";$errorSignIp_style = "";$errorSignIn = "";
       if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $email = inputCleaner($_POST['email']);
         $pass = inputCleaner($_POST['pass']);
         include 'connection.php';
 
-        $sql = "SELECT Usuario_clave, Usuario_bloqueado, Usuario_id FROM usuarios WHERE Usuario_email = '$email'";
+        $sql = "SELECT Usuario_clave, Usuario_bloqueado, Usuario_id, Usuario_perfil FROM usuarios WHERE Usuario_email = '$email'";
         $results = $conn->query($sql);
         if ($results->num_rows == 1) {
 
@@ -37,6 +37,7 @@
             $db_pass = $row[0];
             $bloq = $row[1];
             $_SESSION['user_Id'] = $row[2];
+            $user_profile = $row[3];
           }
           $results->free_result();
 
@@ -46,12 +47,20 @@
               $_SESSION['display_user'] = 'Welcome, '.$email;
               $_SESSION['session_email'] = $email;
               $_SESSION['display_user_style'] = 'display: block;';
-              header('Location: ../');
+              if ($user_profile == 'admin') {
+                header('Location: ../site-administration');
+              } else {
+                header('Location: ../');
+              }
             } else {
-              $errorSignIn = "Error, check your email/password";
+              $errorSignIn = "Error, check your email or password";
             }
           } else {
-            $verificationError = "visibility: visible";
+            if (password_verify($pass, $db_pass)) {
+              $verificationError = "visibility: visible";
+            } else {
+              $errorSignIn = "Error, check your email or password";
+            }
           }
         } else {
           $errorSignIn = "Error, check your email or password";
@@ -77,13 +86,13 @@
              </ul>
            </div>
            <!--THIS TOGGLES WHEN THE USER LOGINS-->
-           <div id="login_dropdown_" class="dropdown text-end" style="<?php echo $_SESSION['display_user_style']; ?>">
-             <a href="#" class="" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
+           <div id="login_dropdown_" style="<?php echo $_SESSION['display_user_style']; ?>">
+             <a href="#" class="profile_dropdown">
                <img src="<?php if (isset($_SESSION['profile_image'])) {
                  echo 'profile/uploads/' . $_SESSION['profile_image'];} else {echo 'images/profile-silhouette.png';}?>" width="32" height="32">
              </a>
-             <ul class="userDropDown" aria-labelledby="dropdownUser1">
-               <li><a class="dropdown-item" href="#">Settings</a></li>
+             <ul class="userDropDown">
+               <!-- <li><a class="dropdown-item" href="#">Settings</a></li> -->
                <li><a class="dropdown-item" href="profile">Profile</a></li>
                <li><hr class="dropdown-divider"></li>
                <li><a class="dropdown-item" href="login/logout.php">Sign out</a></li>
@@ -97,7 +106,7 @@
       <h2 class="signupFormHeader">Log in</h2>
       <!--Error Window-->
       <div class="signupError" style="<?php echo $errorSignIp_style ?>">
-        <div class="center_item">
+        <div>
           <?php echo $errorSignIn  ?>
         </div>
 
