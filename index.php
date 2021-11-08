@@ -1,14 +1,6 @@
 <?php
   session_start();
 
-  if (isset($_SESSION['session_email'])) {
-    include "login/connection.php";
-    $sessionEmail = $_SESSION['session_email'];
-    $sql = "SELECT Usuario_fotografia FROM usuarios WHERE Usuario_email = '$sessionEmail'";
-    $result = $conn->query($sql);
-    $_SESSION['profile_image'] = $result->fetch_row()[0];
-  }
-
   if (isset($_SESSION['successfullyRegistered'])) {
     $registered_info_style = 'display: block;';
   }
@@ -67,7 +59,151 @@
       <div class="main_container">
         <div id="frontPage_text">
           <h1 style="text-align: center;">Welcome to my page!</h1>
-          <p style="text-align: center;">[Intro: Baby Ranks & Yandel]Esté menor que usted (Eh)La quiere conocer (Eh)Con su forma de actuar (Eh)Me va a enloquecer (Eh)La tengo en mi soñar (Eh)Acaricio su piel (Eh)Le quiero confesar (Eh)Que hoy[Coro: Tonny Tun Tun]No me importa que usted sea mayor que yoHoy la quiero en mi camaY no malinterprete mi intenciónEs que no aguanto las gana'Por eso he venido a decírseloQue hoy la quiero en mi camaSi no estás dispuesta, ya dímeloEs que no aguanto las gana'Dame un chance[Verso 1: Yandel & Wisin]No me importa que usted sea mayor que yo, oyeTe quiero aquí aunque tenga mil amoresYo creo en el destino, oyeTú sabes que Dios tiene sus razonesEres mayor que yo, oyeTe quiero aquí aunque tenga mil amoresYo creo en el destino, oyeTú sabes que Dios tiene sus razones (¡Fuimos!)Avanza, vámono' y déjemono' de bla-bla-blaSuelta la cartera pa' la cama con el cha-cha-chaTe miro y me mira', te me pego pero no haces na'Dime por qué, por qué (¡Vamo'!)[Verso 2: Wisin]Así es que ellas mueven las poleasSus carros las fuleaY bum, bum, ella se come la breaLlegamo' a la disco y to' el mundo la lookeaChulea, muah, tira un beso y se patea¿Eso, eso con qué se come? ¿Con queso?Esto es un proceso, suelta de eso pa' los preso'Tú sabes, doña, cómo mi voz tiene pesoEl perro quiere un hueso, avanza, dame un beso, fuimo'Sácale la pata que tú eres tremenda gata (Buh)Con pata, doña, con pata, jeAvanza, póngase la bataDejémonos de lata, te vo'a dar con la culata y-[Coro: Tonny Tun Tun]No me importa que usted sea mayor que yoHoy la quiero en mi camaY no malinterprete mi intenciónEs que no aguanto las gana'Por eso he venido a decírseloQue hoy la quiero en mi camaSi no estás dispuesta, ya dímeloEs que no aguanto las gana'Dame un chance[Verso 3: Daddy Yankee & Tonny Tun Tun](Nos fuimos lejos, pa', Daddy)Yo soy un tigre, por la edad no midas el calibrePrueba del menú y después me dicesSoy fuego en el CaribeMa'i, que las apariencia' no te engañenNi permitas que la gente te cizañe (¡Azota!)Porque tengo estilo de sicarioDe la calle; vocabularioLa gatita me mira fasciná'Y a la vez se pone media guilla'Se da cuenta de lo contrarioPorque vio que yo tengo la capacidadQue un joven requiere, sin usar intermediarioEl chico sabe to' el tiempo lo que haceEs tiempo que separen los niños de los hombresEl chico sabe to' el tiempo lo que haceEs tiempo que separen con calma los colores (¡Azota!)Porque tengo estilo de sicarioDe la calle; vocabularioLa gatita me mira fasciná'Y a la vez se pone media guilla'Se da cuenta de lo contrarioPorque vio que yo tengo la capacidadQue un joven requiere, sin usar intermediario(Dame un chance)[Verso 4: Héctor "El Father"]Dale, cuarentona, con tu corte bien ronconaSuenan la' campana' que ya Wisin 'tá en la lonaJuguetona, como en la cama me arrinconaAquella tiene veinte, pero se parece a ChonaMalandrona, con ese corte bien burlonaTráiganme la linda, Wisin baila con la monaGuapetona, y si tu gato te encajonaQuítate el grillete, dile que tú te encojona'Quítate el grillete, dile que tú te encojona'Quítate el grillete, dile que tú te encojona'Quítate el grillete, dile que tú te encojona'[Outro: Wisin, Daddy Yankee, Héctor "El Father" & Yandel]EhDoble U "El Sobreviviente"DaddyDaddy YankeeTamo' readyYandelYankeeYou know how we do, manWe readyY el gato, RanksMas Flow 2Hector "El Bambino"Hector "El Bambino"Wisin & YandelTonny Tun TunRepresentando un junte pa' la historia en "Más Flow 2"¿Entiendes?En más ningún otro discoJajajajajaLuny, lo único que te falta unir, es a Bush y a Bin LadenJajajajaja</p>
+          <pre style="text-align: center;">
+[Letra de "Mayor Que Yo 3" ft. Don Omar, Wisin, Yandel & Daddy Yankee]
+
+[Intro: Yandel, Daddy Yankee & Wisin]
+Luny
+Estaba loco por verte, deseoso por tenerte
+Quiero volver a su lado (Más Flow 3)
+No importa qué diga la gente
+Le juro, señora, nunca le fallé
+(W, Yandel, okey, El Rey Don Omar)
+(El mejor de todos los tiempos, DY)
+
+[Refrán: Yandel & Daddy Yankee]
+Decían que por ser menor que usted, yo no la quería (Latinos, stand up)
+Que no era amor solo interés, y aquí estoy todavía (Ajá)
+Y aunque pase el tiempo lo sabes bien
+Que soy aquel chico que te hizo sentir mujer
+Siendo mayor que yo usted
+(Luny Tunes, Mas Flow 3)
+
+[Verso 1: Don Omar & Daddy Yankee]
+(Llegó Papá, ¡Don!)
+Señora, usted me gusta tanto, igual que el primer día
+Bienvenida a la tercera dinastía
+Se juntaron los que to' el mundo quería (You know)
+Para cumplir toditas sus fantasías (El Duro)
+Con esa experiencia es que usted me ha conquistado
+Me tiene loco, me tiene enamorado
+Y esa cinturita como que no ha cambiado
+Y yo esta noche la quiero tener (Don, Don, Don)
+Allá en mi cama
+Dos cuerpos calentao', prendío' en llamas (Zumba)
+El ron que dure hasta las 3 de la mañana
+Yo forever papá, tú forever mamá
+Ay, malvada con mente de perversa
+Como acelera cuando pone la reversa
+Choca con el hunter cazando la presa
+No baje el fronte vamo' a matarnos (Don)
+
+[Coro: Don Omar & Daddy Yankee]
+Que la quiero mayor que yo, que yo
+Que me dé calor, que me dé de su amor
+Me eduque en experiencia, me deje loco
+Me lleve a la cama y me haga alucinar
+Que la quiero mayor que yo, que yo (¿Qué?)
+Que me dé calor, que me dé de su amor
+Me eduque en experiencia, me deje loco
+Me lleve a la cama y me haga alucinar
+(Zu-zu-zu-zu-zu-zumba)
+
+[Verso 2: Wisin]
+Lunes a viernes tiene novio, pero el sábado lo deja (Doble)
+Aparece el domingo con la cara de pende— weh
+Ella se viste cara y el tipo se acompleja (Ajá)
+Que el tiguere es su favorito, me lo dijo en la oreja
+Señora mía, saludable, rica, cero calorías
+No has cambiado en nada, tú sigues de repostería
+Quiero besarte de nuevo, ¿te gustaría?
+Te traje una sorpresa de Victoria, ¿tú me la modelarías?
+Ese cuerpo no ha cambiado (Heh), me tienes hipnotizado (Heh)
+Siempre fina, maquillada, tremendo calzado (W)
+Recordemos el pasado, ya yo estoy desesperado
+Completemos lo que no hemos terminado
+Gata salvaje (Frontúa), de Tinker Bell el tatuaje (Ajá)
+Cuando está sola en su casa me llama pa' que trabaje (Siempre)
+La monto en mi viaje, ella quiere cangrinaje (Tú sabe')
+No tiene ropa interior debajo del traje
+
+[Refrán: Don Omar & Yandel]
+Decían que por ser menor que usted
+Yo no la quería (No diga' eso)
+Que no era amor solo interés (Se equivocaron)
+Y aquí estoy todavía (Yes, babe)
+Y aunque pase el tiempo lo sabes bien, que soy aquel (You know)
+Chico que te hizo sentir mujer (The One)
+Siendo mayor que yo usted
+
+[Verso 3: Daddy Yankee]
+Okey
+El mejor de todos los tiempos
+The GOAT
+Da-ddy
+¡Fuimo'!
+Y a mí me gusta la fruta madura que se deja comer
+Cuando yo te pele ahí, ahí te voy a morder, heh
+Qué bien tú te conservas haces que me sangre hierva
+La mujer es como el vino y tú eres la mejor reserva (Let's go)
+
+[Puente: Daddy Yankee]
+Quiere que le diga, quiere que le diga, dale, mami, enséñame
+Quiere que le diga que en la cama usted es la que sabe
+Dame cariñito, corazón, dame cariñito, corazón
+No hay hombre que la dome cuando ella aprieta
+Ah-oh, ah-oh, me puse salvaje
+Ah-oh, ah-oh, aguanta el voltaje
+Ah-oh, ah-oh, sacúdeme ese motete
+La yegua que pide fuete
+Se lo damo' pa' que respete
+
+[Verso 4: Yandel & Daddy Yankee]
+Me tiene enloquecido, estoy convencido
+Que usted se va conmigo aunque me busque un lío
+Yo no te obligo, me sigue o te sigo
+Tranquila que de aquí nos vamos encendí'o
+Yo sé que arrepentido no me quedaré
+Entre mis sábanas te encontraré
+Sabes que soy el hombre, que bien te conoce
+Siendo tú mayor que yo (¡Fuimo'!)
+
+[Coro: Daddy Yankee & Don Omar]
+Que la quiero mayor que yo, que yo
+Que me dé calor, que me dé de su amor (Las Torres)
+Me eduque en experiencia, me vuelve loco
+Me lleve a la cama y me haga alucinar (Don!)
+Que la quiero mayor que yo, que yo
+Que me dé calor, que me dé de su amor
+Me eduque en experiencia, me deje loco
+Me lleve a la cama y me haga alucinar (Fuimo')
+
+[Puente: Daddy Yankee]
+Quiere que le diga, quiere que le diga, dale, mami, enséñame
+Quiere que le diga que en la cama usted es la que sabe
+Dame cariñito, corazón, dame cariñito, corazón
+No hay hombre que la dome cuando ella aprieta
+Ah-oh, ah-oh, me puse salvaje
+Ah-oh, ah-oh, aguanta el voltaje
+Ah-oh, ah-oh, sacúdeme ese motete
+La yegua que pide fuete
+Se lo damo' pa' que respete
+
+[Outro: Todos]
+Luny
+Damas y caballeros, esto es un encuentro de las Naciones Unidas (Jajajaja)
+Mas Flow 3
+Luny Tunes
+Pina Records
+Don, Don, Don, Don
+Yandel
+W
+El Rey
+El soberano, King Daddy
+Llegó Papá, El Duro
+Así mesmo, llegó Papá
+La torre, del Movimiento
+</pre>
         </div>
         <div id="frontPage_image">
           <img src="profile.png" alt="Alejandro Ortega Guerra" loading="lazy" width="300" height="300">

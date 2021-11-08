@@ -343,6 +343,21 @@ button[type="submit"], button[type="button"] {
   display: flex;
 }
 
+.main_container_admin {
+  height: auto;
+  width: 90%;
+  margin: 6rem auto 3rem auto;
+}
+
+.list_pages {
+  text-align: center;
+  list-style: none;
+  margin-top: 1rem;
+}
+
+.list_pages a {
+}
+
 #frontPage_image {
   width: 300px;
   height: 300px;
@@ -356,7 +371,6 @@ button[type="submit"], button[type="button"] {
 }
 
 #frontPage_text pre {
-  border: 1px solid black;
   width: 80%;
   font-size: 100%;
   margin: 0 auto;

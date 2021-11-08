@@ -70,8 +70,9 @@
                 array_push($errors, "- This nick is taken");
               } else {
                 $hash_pass = password_hash($pass1, PASSWORD_DEFAULT);
-                $sql = "INSERT INTO usuarios(Usuario_email, Usuario_clave, Usuario_nick)
-                VALUES ('$email', '$hash_pass', '$username')";
+                $sql = "INSERT INTO usuarios(Usuario_email, Usuario_clave, Usuario_nick, Usuario_nombre, Usuario_apellido1,
+                  Usuario_domicilio, Usuario_poblacion, Usuario_provincia, Usuario_nif)
+                VALUES ('$email', '$hash_pass', '$username', '$fname', '$lname', '$address', '$country', '$province', '$identificator')";
                 if ($conn->query($sql)) {
                   $sql = "SELECT Usuario_id FROM usuarios WHERE Usuario_email = '$email'";
                   $results = $conn->query($sql);

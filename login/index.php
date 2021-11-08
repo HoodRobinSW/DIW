@@ -28,7 +28,7 @@
         $pass = inputCleaner($_POST['pass']);
         include 'connection.php';
 
-        $sql = "SELECT Usuario_clave, Usuario_bloqueado, Usuario_id, Usuario_perfil FROM usuarios WHERE Usuario_email = '$email'";
+        $sql = "SELECT Usuario_clave, Usuario_bloqueado, Usuario_id, Usuario_perfil, Usuario_fotografia FROM usuarios WHERE Usuario_email = '$email'";
         $results = $conn->query($sql);
         if ($results->num_rows == 1) {
 
@@ -38,6 +38,7 @@
             $bloq = $row[1];
             $_SESSION['user_Id'] = $row[2];
             $user_profile = $row[3];
+            $profile_image = $row[4];
           }
           $results->free_result();
 
@@ -47,8 +48,10 @@
               $_SESSION['display_user'] = 'Welcome, '.$email;
               $_SESSION['session_email'] = $email;
               $_SESSION['display_user_style'] = 'display: block;';
+              $_SESSION['profile_image'] = $profile_image;
+              $_SESSION['session_profile'] = $user_profile;
               if ($user_profile == 'admin') {
-                header('Location: ../site-administration');
+                header('Location: ../site-administration?page=1');
               } else {
                 header('Location: ../');
               }
