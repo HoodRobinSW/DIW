@@ -38,11 +38,13 @@
 @media screen and (max-width: 900px) {
   #frontPage_image {
     float: none !important;
-    width: 0 auto !important;
+    width: 100% !important;
   }
 
   #frontPage_text {
     width: 100% !important;
+    position: absolute;
+    margin-top: 20rem !important;
     margin: 0 auto;
   }
 }
@@ -101,7 +103,7 @@ ul.main-ul-container li:first-child {
 nav {
   z-index: 99;
   top: 0;
-  opacity: 0.5;
+  /*opacity: 0.5;*/
   background-color: #444054;
   padding: 0.5rem 0;
   position: fixed;
@@ -334,25 +336,31 @@ button[type="submit"], button[type="button"] {
 
 .main_container {
   z-index: -1;
-  height: 90%;
+  height: auto;
   width: 90%;
-  margin: 6rem auto auto auto;
+  margin: 6rem auto 3rem auto;
   position: relative;
-  overflow: hidden;
+  display: flex;
 }
 
 #frontPage_image {
   width: 300px;
   height: 300px;
-  float: right;
   margin: 0 auto;
 }
 
 #frontPage_text {
-  position: relative;
   width: 60%;
-  height: 15rem;
+  height: auto;
   text-align: center;
+}
+
+#frontPage_text pre {
+  border: 1px solid black;
+  width: 80%;
+  font-size: 100%;
+  margin: 0 auto;
+  overflow: hidden;
 }
 
 .profileTableContainer {
