@@ -11,6 +11,8 @@
   $results_count = $results->num_rows;
   $num_pages = ceil($results_count / 2);
 
+  $sql = 'SELECT * FROM usuarios LIMIT '.($_GET['page']).','. 2;
+  $results = $conn->query($sql);
   if(!isset($_GET['page'])) {
     $actualPage = 1;
   } else {
@@ -50,6 +52,7 @@
           <?php
             while($row = $results->fetch_row()) {
               echo "<tr>".
+                "<td><input type='checkbox' value='$row[0]'</td>"
                 "<td>".$row[1]."</td>".
                 "<td>".$row[2]."</td>".
                 "<td>".$row[7]."</td>".
@@ -57,16 +60,18 @@
             }
           ?>
         </table>
-        <div class="list_pages" style="width:100%;">
-          <li>
-            <?php
-              for ($x=0;$x<$num_pages;$x++){
-                echo "<a href='http://localhost/site-administration/?page=".($x+1)."'>".($x+1)."</a>";
-              }
-            ?>
-          </li>
-        </div>
       </div>
     </main>
+    <footer>
+      <div class="list_pages" style="width:100%;">
+        <li>
+          <?php
+            for ($x=0;$x<$num_pages;$x++){
+              echo "<a href='http://localhost/site-administration/?page=".($x+1)."'>".($x+1)."</a>";
+            }
+          ?>
+        </li>
+      </div>
+    </footer>
   </body>
 </html>

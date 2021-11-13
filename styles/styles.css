@@ -356,6 +356,8 @@ button[type="submit"], button[type="button"] {
 }
 
 .list_pages a {
+  text-decoration: none;
+  color: white;
 }
 
 #frontPage_image {
@@ -436,4 +438,17 @@ button[type="submit"], button[type="button"] {
   position: absolute;
   top: 90%;
   left: 90%;
+}
+
+footer {
+  background-color: black;
+  width: 100%;
+  height: 2rem;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+}
+
+footer.list_pages {
+     
 }
