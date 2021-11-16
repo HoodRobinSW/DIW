@@ -51,7 +51,7 @@
               $_SESSION['profile_image'] = $profile_image;
               $_SESSION['session_profile'] = $user_profile;
               if ($user_profile == 'admin') {
-                header('Location: ../site-administration?page=1');
+                header('Location: ../site-administration');
               } else {
                 header('Location: ../');
               }

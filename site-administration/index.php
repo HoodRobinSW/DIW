@@ -9,14 +9,23 @@
   $sql = 'SELECT * FROM usuarios';
   $results = $conn->query($sql);
   $results_count = $results->num_rows;
-  $num_pages = ceil($results_count / 2);
+  $num_pages = ceil($results_count / 4);
 
-  $sql = 'SELECT * FROM usuarios LIMIT '.($_GET['page']).','. 2;
+  $sql = 'SELECT * FROM usuarios LIMIT '.($_GET['page'] * 4).','. 4;
   $results = $conn->query($sql);
   if(!isset($_GET['page'])) {
-    $actualPage = 1;
+    $actualPage = 0;
   } else {
     $actualPage = $_GET['page'];
+  }
+
+  if ($_SERVER["REQUEST_METHOD"] == "POST") {
+      $fields = array("(Usuario_nif LIKE '%". $_POST['nif'] ."%')", "(Usuario_provincia LIKE '%". $_POST['province'] ."%')", "(Usuario_email LIKE '%". $_POST['email'] ."%')");
+      echo implode(' OR ', $fields);
+      $sql = 'SELECT * FROM usuarios WHERE '.implode(' AND ', $fields).' LIMIT '.($_GET['page'] * 4).','. 4;
+      $results = $conn->query($sql);
+      $results_count = $results->num_rows;
+      $num_pages = ceil($results_count / 4);
   }
  ?>
 <!DOCTYPE html>
@@ -43,18 +52,40 @@
   </header>
     <main>
       <div class="main_container_admin">
-        <table style="width: 100%;text-align:center;">
+        <form method="post" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']);?>">
+          <table style="width: 100%;text-align:center;">
+            <tr>
+              <td></td>
+              <td>DNI</td>
+              <td>Province</td>
+              <td>Email</td>
+            </tr>
+            <tr>
+              <td>Filter by:</td>
+              <td><input type="text" name="nif"/></td>
+              <td><input type="text" name="province"/></td>
+              <td><input type="text" name="email"/></td>
+              <td><Button type="submit" value="Filter">Filter</button></td>
+            </tr>
+          </table>
+        </form>
+        <table style="width: 100%;text-align:center;margin-top: 5rem;">
           <tr>
+            <th></th>
             <th>Nombre</th>
             <th>Apellido</th>
+            <th>DNI</th>
+            <th>Province</th>
             <th>Email</th>
           </tr>
           <?php
             while($row = $results->fetch_row()) {
               echo "<tr>".
-                "<td><input type='checkbox' value='$row[0]'</td>"
+                "<td><input type='checkbox' value='$row[0]' name='options[]'</td>".
                 "<td>".$row[1]."</td>".
                 "<td>".$row[2]."</td>".
+                "<td>".$row[17]."</td>".
+                "<td>".$row[15]."</td>".
                 "<td>".$row[7]."</td>".
               "</tr>";
             }
@@ -66,8 +97,8 @@
       <div class="list_pages" style="width:100%;">
         <li>
           <?php
-            for ($x=0;$x<$num_pages;$x++){
-              echo "<a href='http://localhost/site-administration/?page=".($x+1)."'>".($x+1)."</a>";
+            for ($x=1;$x<$num_pages+1;$x++){
+              echo "<a href='http://localhost/site-administration/?page=".($x-1)."'>".($x)."</a>";
             }
           ?>
         </li>
