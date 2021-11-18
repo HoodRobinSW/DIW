@@ -6,26 +6,39 @@
     header('Location: ../');
 
   include '../login/connection.php';
-  $sql = 'SELECT * FROM usuarios';
-  $results = $conn->query($sql);
-  $results_count = $results->num_rows;
-  $num_pages = ceil($results_count / 4);
 
-  $sql = 'SELECT * FROM usuarios LIMIT '.($_GET['page'] * 4).','. 4;
-  $results = $conn->query($sql);
   if(!isset($_GET['page'])) {
     $actualPage = 0;
   } else {
     $actualPage = $_GET['page'];
   }
 
+  if (!isset($_SESSION['filter_email'])) {
+    $_SESSION['filter_nif'] = ''; $_SESSION['filter_province'] = '';
+    $_SESSION['filter_email'] = '';
+  }
+
+  $fields = array("(Usuario_nif LIKE '%". $_SESSION['filter_nif'] ."%')", "(Usuario_provincia LIKE '%". $_SESSION['filter_province'] ."%')", "(Usuario_email LIKE '%". $_SESSION['filter_email'] ."%')");
+  $sql = 'SELECT * FROM usuarios WHERE '.implode(' AND ', $fields);
+  $results = $conn->query($sql);
+  $results_count = $results->num_rows;
+  $num_pages = ceil($results_count / 4);
+
+  $sql = 'SELECT * FROM usuarios WHERE '.implode(' AND ', $fields).' LIMIT '.($actualPage * 4).','. 4;
+  $results = $conn->query($sql);
+
   if ($_SERVER["REQUEST_METHOD"] == "POST") {
+      $_SESSION['filter_nif'] = $_POST['nif']; $_SESSION['filter_province'] = $_POST['province'];
+      $_SESSION['filter_email'] = $_POST['email'];
+
       $fields = array("(Usuario_nif LIKE '%". $_POST['nif'] ."%')", "(Usuario_provincia LIKE '%". $_POST['province'] ."%')", "(Usuario_email LIKE '%". $_POST['email'] ."%')");
-      echo implode(' OR ', $fields);
-      $sql = 'SELECT * FROM usuarios WHERE '.implode(' AND ', $fields).' LIMIT '.($_GET['page'] * 4).','. 4;
+      $sql = 'SELECT * FROM usuarios WHERE '.implode(' AND ', $fields);
       $results = $conn->query($sql);
       $results_count = $results->num_rows;
       $num_pages = ceil($results_count / 4);
+
+      $sql = 'SELECT * FROM usuarios WHERE '.implode(' AND ', $fields).' LIMIT '.($actualPage * 4).','. 4;
+      $results = $conn->query($sql);
   }
  ?>
 <!DOCTYPE html>
@@ -62,35 +75,38 @@
             </tr>
             <tr>
               <td>Filter by:</td>
-              <td><input type="text" name="nif"/></td>
-              <td><input type="text" name="province"/></td>
-              <td><input type="text" name="email"/></td>
+              <td><input type="text" name="nif" value="<?php echo $_SESSION['filter_nif']?>"/></td>
+              <td><input type="text" name="province" value="<?php echo $_SESSION['filter_province']?>"/></td>
+              <td><input type="text" name="email" value="<?php echo $_SESSION['filter_email']?>"/></td>
               <td><Button type="submit" value="Filter">Filter</button></td>
             </tr>
           </table>
         </form>
-        <table style="width: 100%;text-align:center;margin-top: 5rem;">
-          <tr>
-            <th></th>
-            <th>Nombre</th>
-            <th>Apellido</th>
-            <th>DNI</th>
-            <th>Province</th>
-            <th>Email</th>
-          </tr>
-          <?php
-            while($row = $results->fetch_row()) {
-              echo "<tr>".
-                "<td><input type='checkbox' value='$row[0]' name='options[]'</td>".
-                "<td>".$row[1]."</td>".
-                "<td>".$row[2]."</td>".
-                "<td>".$row[17]."</td>".
-                "<td>".$row[15]."</td>".
-                "<td>".$row[7]."</td>".
-              "</tr>";
-            }
-          ?>
-        </table>
+        <form action="delete.php" method="post">
+          <table style="width: 100%;text-align:center;margin-top: 5rem;">
+            <tr>
+              <th></th>
+              <th>Nombre</th>
+              <th>Apellido</th>
+              <th>DNI</th>
+              <th>Province</th>
+              <th>Email</th>
+            </tr>
+            <?php
+              while($row = $results->fetch_row()) {
+                echo "<tr>".
+                  "<td><input type='checkbox' value='$row[0]' name='options[]'</td>".
+                  "<td>".$row[1]."</td>".
+                  "<td>".$row[2]."</td>".
+                  "<td>".$row[17]."</td>".
+                  "<td>".$row[15]."</td>".
+                  "<td>".$row[7]."</td>".
+                "</tr>";
+              }
+            ?>
+          </table>
+          <input  type="submit" value="Borrar"/>
+        </form>
       </div>
     </main>
     <footer>
