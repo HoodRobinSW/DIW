@@ -54,7 +54,7 @@
 
       <!-- Async script executes immediately and must be after any DOM elements used in callback. -->
       <script
-        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCCKwW88O7jV36kp0sUbK4g8Q0Luiqc9co&callback=getLocation&v=weekly"
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCCKwW88O7jV36kp0sUbK4g8Q0Luiqc9co&callback=initMap&v=weekly"
         async
       ></script>
     </main>
