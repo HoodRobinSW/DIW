@@ -21,7 +21,7 @@
       <nav>
         <div id="navbar_" class="center_item">
           <div class="homeButton-container center_item_vertically">
-            <a id="list_item_" href="" class="">Home</a>
+            <a id="list_item_" href="../" class="">Home</a>
             <a style="margin-left:4rem;" id="list_item_" href="">About Me</a>
           </div>
 

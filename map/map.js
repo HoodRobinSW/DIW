@@ -5,8 +5,14 @@ function initMap() {
   map = new google.maps.Map(document.getElementById("map"), {
     center: pos,
     zoom: 15,
-    mapId:'9997268fc367fe92'
+    mapId:'9997268fc367fe92',
+    disableDefaultUI: true
   });
+  const marker = new google.maps.Marker({
+    position: pos,
+    map: map,
+  });
+
   infoWindow = new google.maps.InfoWindow();
 
   const locationButton = document.createElement("button");
