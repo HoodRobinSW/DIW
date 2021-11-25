@@ -1,5 +1,11 @@
 let map, infoWindow;
+let latitud, longitud;
 
+function setLatLong(lat, long) {
+  latitud = lat;
+  longitud = long;
+  console.log(latitud);
+}
 function initMap() {
   const pos ={ lat: 36.86695028365619, lng: -6.17892511582757 };
   map = new google.maps.Map(document.getElementById("map"), {
