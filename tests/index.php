@@ -20,6 +20,25 @@
            return $parts[0];
            return floatval($parts[0]) / floatval($parts[1]);
        }
+
+       function distanceCalculation($point1_lat, $point1_long, $point2_lat, $point2_long, $unit = 'km', $decimals = 2) {
+       	// Cálculo de la distancia en grados
+       	$degrees = rad2deg(acos((sin(deg2rad($point1_lat))*sin(deg2rad($point2_lat))) + (cos(deg2rad($point1_lat))*cos(deg2rad($point2_lat))*cos(deg2rad($point1_long-$point2_long)))));
+
+       	// Conversión de la distancia en grados a la unidad escogida (kilómetros, millas o millas naúticas)
+       	switch($unit) {
+       		case 'km':
+       			$distance = $degrees * 111.13384; // 1 grado = 111.13384 km, basándose en el diametro promedio de la Tierra (12.735 km)
+       			break;
+       		case 'mi':
+       			$distance = $degrees * 69.05482; // 1 grado = 69.05482 millas, basándose en el diametro promedio de la Tierra (7.913,1 millas)
+       			break;
+       		case 'nmi':
+       			$distance =  $degrees * 59.97662; // 1 grado = 59.97662 millas naúticas, basándose en el diametro promedio de la Tierra (6,876.3 millas naúticas)
+       	}
+       	return round($distance, $decimals);
+       }
+       //Saca la localizacion de la foto
       function get_image_location($image = ''){
           $exif = exif_read_data($image, 0, true);
           if($exif && isset($exif['GPS'])){
@@ -51,8 +70,11 @@
 
       $image = "pic1.jpg";
       $arr = get_image_location($image);
+
+      $distance = distanceCalculation(36.86695028365619, -6.17892511582757, $arr['latitude'], $arr['longitude']);
      ?>
      <script type="text/javascript">
+
        let lat = <?php echo $arr['latitude'] ?>;
        let long = <?php echo $arr['longitude'] ?>;
        let map, infoWindow;
@@ -114,6 +136,9 @@
        }
      </script>
      <div id="map" style="height:400px"></div>
+     <div>
+       <?php echo $distance; ?>
+     </div>
 
      <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCCKwW88O7jV36kp0sUbK4g8Q0Luiqc9co&callback=initMap&v=weekly" async></script>
   </body>
